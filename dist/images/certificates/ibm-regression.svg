@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" width="100%" height="100%">
+  <!-- Background -->
+  <rect width="600" height="420" fill="#0A0F1D"/>
+  <rect x="15" y="15" width="570" height="390" rx="10" fill="#0F172A" stroke="#1E293B" stroke-width="2"/>
+  <rect x="25" y="25" width="550" height="370" rx="8" fill="#111B33" stroke="#0284C7" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- Cognitive Class Swirl Symbol -->
+  <circle cx="90" cy="85" r="22" fill="#0284C7" fill-opacity="0.15" stroke="#38BDF8" stroke-width="2"/>
+  <path d="M85 80 A9 9 0 1 1 96 91 A5 5 0 1 1 89 83" stroke="#38BDF8" stroke-width="2" fill="none"/>
+
+  <!-- QR Code Mockup -->
+  <rect x="490" y="60" width="52" height="52" fill="#1E293B" rx="4" stroke="#334155" stroke-width="1"/>
+  <rect x="496" y="66" width="16" height="16" fill="#38BDF8"/>
+  <rect x="520" y="66" width="16" height="16" fill="#38BDF8"/>
+  <rect x="496" y="90" width="16" height="16" fill="#38BDF8"/>
+  <rect x="522" y="90" width="8" height="8" fill="#38BDF8"/>
+
+  <!-- Certificate Details -->
+  <text x="300" y="95" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="12" text-anchor="middle">This is to certify that</text>
+  <text x="300" y="140" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="24" font-weight="900" text-anchor="middle" letter-spacing="0.5">Joemarie D. Damasing</text>
+  <text x="300" y="170" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="12" text-anchor="middle">successfully completed and received a passing grade in</text>
+  
+  <text x="300" y="215" fill="#38BDF8" font-family="system-ui, sans-serif" font-size="23" font-weight="900" text-anchor="middle">Digital Analytics &amp; Regression</text>
+  <text x="300" y="240" fill="#64748B" font-family="system-ui, sans-serif" font-size="12" text-anchor="middle">(ML0103EN, provided by IBM)</text>
+
+  <line x1="150" y1="260" x2="450" y2="260" stroke="#0284C7" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Issued By & Date -->
+  <text x="300" y="290" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">A course on cognitiveclass.ai • Powered by IBM Developer Skills Network</text>
+  <text x="300" y="315" fill="#CBD5E1" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Issued by Cognitive Class</text>
+
+  <!-- Date Pill -->
+  <rect x="220" y="335" width="160" height="28" rx="14" fill="#0284C7" fill-opacity="0.15" stroke="#0284C7" stroke-width="1"/>
+  <text x="300" y="353" fill="#38BDF8" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">October 13, 2025</text>
+
+  <!-- Authenticity Footer -->
+  <text x="300" y="388" fill="#475569" font-family="monospace" font-size="9.5" text-anchor="middle">https://courses.cognitiveclass.ai/certificates/4f1f8e684af34a3a8428cc9cd264cb04</text>
+</svg>

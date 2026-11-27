@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" width="100%" height="100%">
+  <!-- Background -->
+  <rect width="600" height="420" fill="#0A0F1D"/>
+  <rect x="15" y="15" width="570" height="390" rx="10" fill="#0F172A" stroke="#1E293B" stroke-width="2"/>
+  <rect x="25" y="25" width="550" height="370" rx="8" fill="#111B33" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- Google Skillshop Badge Header -->
+  <rect x="40" y="38" width="520" height="52" rx="6" fill="#78350F" fill-opacity="0.25" stroke="#F59E0B" stroke-width="1"/>
+  <circle cx="68" cy="64" r="18" fill="#F59E0B" fill-opacity="0.2" stroke="#FBBF24" stroke-width="1.5"/>
+  <text x="68" y="69" fill="#FBBF24" font-family="system-ui, sans-serif" font-size="16" font-weight="900" text-anchor="middle">G</text>
+  <text x="96" y="58" fill="#FDE68A" font-family="system-ui, sans-serif" font-size="13" font-weight="bold">Google Skillshop Credential</text>
+  <text x="96" y="74" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="9.5">Official Accreditation • Verified Industry Issuer</text>
+
+  <!-- QR Code Mockup -->
+  <rect x="490" y="105" width="50" height="50" fill="#1E293B" rx="4" stroke="#334155" stroke-width="1"/>
+  <rect x="496" y="111" width="16" height="16" fill="#F59E0B"/>
+  <rect x="518" y="111" width="16" height="16" fill="#F59E0B"/>
+  <rect x="496" y="133" width="16" height="16" fill="#F59E0B"/>
+  <rect x="522" y="133" width="6" height="6" fill="#F59E0B"/>
+
+  <!-- Certificate Details -->
+  <text x="300" y="130" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">This acknowledges that</text>
+  <text x="300" y="165" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="24" font-weight="900" text-anchor="middle" letter-spacing="0.5">Joemarie Damasing</text>
+  <text x="300" y="190" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">has successfully completed and is certified in</text>
+  
+  <text x="300" y="230" fill="#FBBF24" font-family="system-ui, sans-serif" font-size="22" font-weight="900" text-anchor="middle">Google Analytics Certification</text>
+
+  <line x1="160" y1="255" x2="440" y2="255" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- ID & Validity -->
+  <text x="300" y="280" fill="#CBD5E1" font-family="monospace" font-size="11" text-anchor="middle">Certificate ID: 163142661</text>
+  <text x="300" y="302" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">Issue Date: October 11, 2025 • Expiry Date: October 11, 2026</text>
+
+  <!-- Verified Issuer Pill -->
+  <rect x="200" y="325" width="200" height="28" rx="14" fill="#F59E0B" fill-opacity="0.15" stroke="#F59E0B" stroke-width="1"/>
+  <text x="300" y="343" fill="#FBBF24" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Verified Skillshop Issuer</text>
+
+  <!-- Authenticity Footer -->
+  <text x="300" y="380" fill="#475569" font-family="monospace" font-size="9" text-anchor="middle">https://skillshop.credential.net/7e8f0158-7a31-4468-871c-ce3ffc91fec2</text>
+</svg>

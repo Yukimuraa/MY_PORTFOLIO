@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" width="100%" height="100%">
+  <!-- Background -->
+  <rect width="600" height="420" fill="#0A0F1D"/>
+  <rect x="15" y="15" width="570" height="390" rx="10" fill="#0F172A" stroke="#1E293B" stroke-width="2"/>
+  <rect x="25" y="25" width="550" height="370" rx="8" fill="#111B33" stroke="#0284C7" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- University Header Bar -->
+  <rect x="40" y="38" width="520" height="52" rx="6" fill="#064E3B" fill-opacity="0.3" stroke="#059669" stroke-width="1"/>
+  <circle cx="68" cy="64" r="18" fill="#059669" fill-opacity="0.4" stroke="#10B981" stroke-width="1.5"/>
+  <text x="68" y="68" fill="#34D399" font-family="system-ui, sans-serif" font-size="11" font-weight="900" text-anchor="middle">CHMSU</text>
+  <text x="96" y="58" fill="#6EE7B7" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">Carlos Hilado Memorial State University</text>
+  <text x="96" y="74" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="9">A leading GREEN institution of higher learning in the global community</text>
+
+  <!-- Cognitive Class Swirl Symbol -->
+  <circle cx="90" cy="130" r="20" fill="#0284C7" fill-opacity="0.15" stroke="#38BDF8" stroke-width="2"/>
+  <path d="M85 125 A8 8 0 1 1 95 135 A5 5 0 1 1 88 128" stroke="#38BDF8" stroke-width="2" fill="none"/>
+
+  <!-- QR Code Mockup -->
+  <rect x="490" y="105" width="50" height="50" fill="#1E293B" rx="4" stroke="#334155" stroke-width="1"/>
+  <rect x="496" y="111" width="16" height="16" fill="#38BDF8"/>
+  <rect x="518" y="111" width="16" height="16" fill="#38BDF8"/>
+  <rect x="496" y="133" width="16" height="16" fill="#38BDF8"/>
+  <rect x="522" y="133" width="6" height="6" fill="#38BDF8"/>
+
+  <!-- Certificate Details -->
+  <text x="300" y="125" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">This is to certify that</text>
+  <text x="300" y="160" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="22" font-weight="900" text-anchor="middle" letter-spacing="0.5">Joemarie D. Damasing</text>
+  <text x="300" y="184" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">successfully completed and received a passing grade in</text>
+  <text x="300" y="222" fill="#38BDF8" font-family="system-ui, sans-serif" font-size="22" font-weight="900" text-anchor="middle">Data Analysis with Python</text>
+  <text x="300" y="244" fill="#64748B" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">(DA0101EN, provided by IBM)</text>
+
+  <line x1="160" y1="262" x2="440" y2="262" stroke="#0284C7" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Issued By & Date -->
+  <text x="300" y="286" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="10" text-anchor="middle">A course on cognitiveclass.ai • Powered by IBM Developer Skills Network</text>
+  <text x="300" y="306" fill="#CBD5E1" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Issued by Cognitive Class</text>
+
+  <!-- Date Pill -->
+  <rect x="220" y="325" width="160" height="26" rx="13" fill="#0284C7" fill-opacity="0.15" stroke="#0284C7" stroke-width="1"/>
+  <text x="300" y="342" fill="#38BDF8" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">January 18, 2025</text>
+
+  <!-- Authenticity Footer -->
+  <text x="300" y="375" fill="#475569" font-family="monospace" font-size="9" text-anchor="middle">https://courses.cognitiveclass.ai/certificates/014540327b6a4036b55b27a26208d2e8</text>
+</svg>
