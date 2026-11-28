@@ -3,9 +3,11 @@ import { ArrowRight, ArrowUpRight, Layers } from 'lucide-react';
 import { Section } from './ui/Section';
 import { TechTag } from './ui/TechTag';
 import { FannedCarousel } from './ui/FannedCarousel';
+import { useSound } from '../context/SoundContext.jsx';
 
 const CompactProjectSlide = ({ project, isCenter, isVisible, onActivate }) => {
   const [imgErr, setImgErr] = useState(false);
+  const { playSound } = useSound();
   const imgSrc = imgErr ? project.uploadedFallback : project.image;
   const screenshotCount = project.details?.screenshots?.length || 0;
 
@@ -13,8 +15,12 @@ const CompactProjectSlide = ({ project, isCenter, isVisible, onActivate }) => {
     <a
       href={`#/projects/${project.id}`}
       draggable={false}
+      onMouseEnter={() => {
+        if (isVisible) playSound();
+      }}
       onClick={(e) => {
         e.preventDefault();
+        playSound();
         onActivate(e);
       }}
       tabIndex={isVisible ? 0 : -1}
@@ -94,7 +100,9 @@ const CompactProjectSlide = ({ project, isCenter, isVisible, onActivate }) => {
   );
 };
 
-export const Projects = ({ projects, onOpenProject, onOpenAllProjects }) => (
+export const Projects = ({ projects, onOpenProject, onOpenAllProjects }) => {
+  const { playSound } = useSound();
+  return (
   <Section
     id="projects"
     index="02"
@@ -103,8 +111,10 @@ export const Projects = ({ projects, onOpenProject, onOpenAllProjects }) => (
     action={
       <a
         href="#/projects"
+        onMouseEnter={() => playSound()}
         onClick={(e) => {
           e.preventDefault();
+          playSound();
           onOpenAllProjects();
         }}
         className="group inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.14em] text-ink-subtle transition-colors hover:text-ink"
@@ -135,4 +145,5 @@ export const Projects = ({ projects, onOpenProject, onOpenAllProjects }) => (
       )}
     />
   </Section>
-);
+  );
+};

@@ -2,19 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   FolderGit2,
-  FileDown,
+  FileText,
   Github,
   Linkedin,
   Mail,
   Monitor,
   Sun,
   Moon,
+  Volume2,
+  VolumeX,
   Menu,
   X,
   Check,
   Home,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext.jsx';
+import { useSound } from '../context/SoundContext.jsx';
 
 export const Sidebar = ({
   personalInfo,
@@ -23,12 +26,13 @@ export const Sidebar = ({
   activeSection,
   onNavigateSection,
   onOpenAllProjects,
-  onDownloadResume,
+  onViewResume,
   onActionToast,
 }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const { mode, setMode } = useTheme();
+  const { soundEnabled, toggleSound, playSound } = useSound();
 
   useEffect(() => {
     if (!mobileOpen) return undefined;
@@ -50,6 +54,7 @@ export const Sidebar = ({
       icon: Home,
       isActive: activeView === 'home' && activeSection === 'home',
       onClick: () => {
+        playSound();
         setMobileOpen(false);
         onNavigateSection('home');
       },
@@ -60,18 +65,20 @@ export const Sidebar = ({
       icon: FolderGit2,
       isActive: activeView === 'all-projects' || activeView === 'project-detail',
       onClick: () => {
+        playSound();
         setMobileOpen(false);
         onOpenAllProjects();
       },
     },
     {
       id: 'resume',
-      label: 'Resume',
-      icon: FileDown,
+      label: 'View Resume',
+      icon: FileText,
       isActive: false,
       onClick: () => {
+        playSound();
         setMobileOpen(false);
-        onDownloadResume();
+        onViewResume();
       },
     },
   ];
@@ -103,6 +110,7 @@ export const Sidebar = ({
 
   const handleEmailClick = (e) => {
     e.preventDefault();
+    playSound();
     if (!config.EMAIL) return;
     navigator.clipboard?.writeText(config.EMAIL).then(() => {
       setCopiedEmail(true);
@@ -117,6 +125,8 @@ export const Sidebar = ({
     { key: 'dark', label: 'Dark theme', icon: Moon },
   ];
 
+  const SoundIcon = soundEnabled ? Volume2 : VolumeX;
+
   const sidebarContent = (
     <div className="flex h-full flex-col justify-between bg-canvas px-6 py-7 select-none">
       {/* Top: Brand + Scrollable Nav */}
@@ -124,8 +134,10 @@ export const Sidebar = ({
         <div className="flex items-center justify-between">
           <a
             href="#home"
+            onMouseEnter={() => playSound()}
             onClick={(e) => {
               e.preventDefault();
+              playSound();
               setMobileOpen(false);
               onNavigateSection('home');
             }}
@@ -136,7 +148,10 @@ export const Sidebar = ({
 
           <button
             type="button"
-            onClick={() => setMobileOpen(false)}
+            onClick={() => {
+              playSound();
+              setMobileOpen(false);
+            }}
             className="rounded-md p-1.5 text-ink-subtle hover:bg-elevated hover:text-ink lg:hidden"
             aria-label="Close navigation"
           >
@@ -157,6 +172,7 @@ export const Sidebar = ({
                 <li key={item.id}>
                   <button
                     type="button"
+                    onMouseEnter={() => playSound()}
                     onClick={item.onClick}
                     className={`flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left font-mono text-[13px] transition-colors ${
                       item.isActive
@@ -183,6 +199,8 @@ export const Sidebar = ({
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onMouseEnter={() => playSound()}
+                      onClick={() => playSound()}
                       className="flex items-center gap-3 rounded-lg px-2.5 py-2 font-mono text-[13px] text-ink-muted transition-colors hover:bg-elevated/60 hover:text-ink"
                     >
                       <Icon className="h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
@@ -202,15 +220,15 @@ export const Sidebar = ({
                 <li key={sec.id}>
                   <a
                     href={`#${sec.id}`}
+                    onMouseEnter={() => playSound()}
                     onClick={(e) => {
                       e.preventDefault();
+                      playSound();
                       setMobileOpen(false);
                       onNavigateSection(sec.id);
                     }}
                     className={`block rounded-lg px-2.5 py-1.5 font-mono text-[13px] transition-colors ${
-                      active
-                        ? 'text-ink font-medium'
-                        : 'text-ink-subtle hover:text-ink'
+                      active ? 'text-ink font-medium' : 'text-ink-subtle hover:text-ink'
                     }`}
                   >
                     {sec.label}
@@ -222,10 +240,10 @@ export const Sidebar = ({
         </nav>
       </div>
 
-      {/* Bottom: Theme Pill + Direct Email */}
+      {/* Bottom: Theme Pill + Sound Toggle + Direct Email */}
       <div className="mt-6 space-y-5 border-t border-line pt-5">
-        {/* Segmented Theme Switcher (System / Light / Dark) */}
-        <div className="flex items-center">
+        {/* Segmented Theme Switcher + Sound Toggle */}
+        <div className="flex items-center gap-2.5">
           <div
             className="inline-flex items-center gap-1 rounded-full border border-line bg-surface p-1"
             role="radiogroup"
@@ -242,7 +260,10 @@ export const Sidebar = ({
                   aria-checked={selected}
                   aria-label={opt.label}
                   title={opt.label}
-                  onClick={() => setMode(opt.key)}
+                  onClick={() => {
+                    playSound();
+                    setMode(opt.key);
+                  }}
                   className={`flex h-7 w-7 items-center justify-center rounded-full transition-colors ${
                     selected
                       ? 'bg-elevated text-ink shadow-sm'
@@ -254,6 +275,21 @@ export const Sidebar = ({
               );
             })}
           </div>
+
+          <button
+            type="button"
+            onClick={toggleSound}
+            aria-pressed={soundEnabled}
+            aria-label={soundEnabled ? 'Mute sound effects' : 'Enable sound effects'}
+            title={soundEnabled ? 'Sound effects: ON (click to mute)' : 'Sound effects: OFF (click to enable)'}
+            className={`flex h-9 w-9 items-center justify-center rounded-full border transition-colors ${
+              soundEnabled
+                ? 'border-line-strong bg-elevated text-ink'
+                : 'border-line bg-surface text-ink-subtle hover:border-line-strong hover:text-ink'
+            }`}
+          >
+            <SoundIcon className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
         </div>
 
         {/* Direct Email Reach-out */}
@@ -264,6 +300,7 @@ export const Sidebar = ({
             </p>
             <button
               type="button"
+              onMouseEnter={() => playSound()}
               onClick={handleEmailClick}
               title="Click to copy email address"
               className="mt-2 inline-flex max-w-full items-center gap-2 font-mono text-xs text-ink transition-opacity hover:opacity-80"
@@ -289,6 +326,7 @@ export const Sidebar = ({
           href="#home"
           onClick={(e) => {
             e.preventDefault();
+            playSound();
             onNavigateSection('home');
           }}
           className="font-mono text-sm font-medium tracking-tight text-ink"
@@ -296,15 +334,34 @@ export const Sidebar = ({
           {personalInfo.shortName ? `${personalInfo.shortName} Damasing` : personalInfo.name}
         </a>
 
-        <button
-          type="button"
-          onClick={() => setMobileOpen(true)}
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-surface text-ink-muted hover:text-ink"
-          aria-label="Open navigation menu"
-          aria-expanded={mobileOpen}
-        >
-          <Menu className="h-4 w-4" />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleSound}
+            aria-pressed={soundEnabled}
+            aria-label={soundEnabled ? 'Mute sound effects' : 'Enable sound effects'}
+            className={`flex h-9 w-9 items-center justify-center rounded-lg border transition-colors ${
+              soundEnabled
+                ? 'border-line-strong bg-elevated text-ink'
+                : 'border-line bg-surface text-ink-muted hover:text-ink'
+            }`}
+          >
+            <SoundIcon className="h-4 w-4" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              playSound();
+              setMobileOpen(true);
+            }}
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-surface text-ink-muted hover:text-ink"
+            aria-label="Open navigation menu"
+            aria-expanded={mobileOpen}
+          >
+            <Menu className="h-4 w-4" />
+          </button>
+        </div>
       </header>
 
       {/* Desktop Fixed Left Sidebar */}

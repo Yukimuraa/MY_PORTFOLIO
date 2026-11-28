@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useSound } from '../../context/SoundContext.jsx';
 
 /**
  * Computes shortest signed circular offset in [-floor(total/2), +floor(total/2)]
@@ -34,6 +35,7 @@ export const FannedCarousel = ({
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [dragDeltaX, setDragDeltaX] = useState(0);
+  const { playSound } = useSound();
   const pointerStartRef = useRef(null);
   const didDragRef = useRef(false);
   const wheelCooldownRef = useRef(false);
@@ -194,7 +196,10 @@ export const FannedCarousel = ({
         <div className="mt-3 flex items-center justify-center gap-3.5">
           <button
             type="button"
-            onClick={() => step(-1)}
+            onClick={() => {
+              playSound();
+              step(-1);
+            }}
             aria-label="Previous item"
             className="flex h-8 w-8 items-center justify-center rounded-full border border-line bg-surface text-ink-muted transition-colors hover:border-line-strong hover:text-ink"
           >
@@ -212,7 +217,10 @@ export const FannedCarousel = ({
                     role="tab"
                     aria-selected={selected}
                     aria-label={`Slide ${idx + 1}: ${getLabel(item)}`}
-                    onClick={() => setActiveIndex(idx)}
+                    onClick={() => {
+                      playSound();
+                      setActiveIndex(idx);
+                    }}
                     className={`h-1.5 rounded-full transition-all duration-200 ${
                       selected ? 'w-5 bg-ink' : 'w-1.5 bg-line-strong hover:bg-ink-subtle'
                     }`}
@@ -227,7 +235,10 @@ export const FannedCarousel = ({
 
           <button
             type="button"
-            onClick={() => step(1)}
+            onClick={() => {
+              playSound();
+              step(1);
+            }}
             aria-label="Next item"
             className="flex h-8 w-8 items-center justify-center rounded-full border border-line bg-surface text-ink-muted transition-colors hover:border-line-strong hover:text-ink"
           >

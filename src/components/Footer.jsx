@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUp, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from './ui/Button';
+import { useSound } from '../context/SoundContext.jsx';
 
 export const Footer = ({ personalInfo, config, onNavigate }) => {
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const { playSound } = useSound();
 
   useEffect(() => {
     const handleScroll = () => setShowBackToTop(window.scrollY > 600);
@@ -40,8 +42,10 @@ export const Footer = ({ personalInfo, config, onNavigate }) => {
               <a
                 key={link.id}
                 href={`#${link.id}`}
+                onMouseEnter={() => playSound()}
                 onClick={(e) => {
                   e.preventDefault();
+                  playSound();
                   onNavigate(link.id);
                 }}
                 className="text-sm text-ink-subtle transition-colors hover:text-ink"

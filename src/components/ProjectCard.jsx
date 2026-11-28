@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Layers } from 'lucide-react';
 import { TechTag } from './ui/TechTag';
+import { useSound } from '../context/SoundContext.jsx';
 
 const MAX_TAGS = 4;
 
 export const ProjectCard = ({ project, onOpen, index = 0 }) => {
   const [imageError, setImageError] = useState(false);
+  const { playSound } = useSound();
   const imgSrc = imageError ? project.uploadedFallback : project.image;
   const screenshotCount = project.details?.screenshots?.length || 0;
   const extraTags = project.technologies.length - MAX_TAGS;
@@ -21,8 +23,10 @@ export const ProjectCard = ({ project, onOpen, index = 0 }) => {
     >
       <a
         href={`#/projects/${project.id}`}
+        onMouseEnter={() => playSound()}
         onClick={(e) => {
           e.preventDefault();
+          playSound();
           onOpen(project.id);
         }}
         className="flex h-full flex-col overflow-hidden rounded-xl border border-line bg-surface transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-lift"

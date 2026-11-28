@@ -13,6 +13,7 @@ import { Education } from './components/Education';
 import { Certificates } from './components/Certificates';
 import { GitHubCTA } from './components/GitHubCTA';
 import { ResumeCTA } from './components/ResumeCTA';
+import { ResumeModal } from './components/ResumeModal';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
@@ -50,6 +51,7 @@ export default function App() {
 
   const [activeSection, setActiveSection] = useState('home');
   const [route, setRoute] = useState(readRouteFromHash);
+  const [resumeOpen, setResumeOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const pendingScrollTarget = useRef(null);
 
@@ -167,7 +169,7 @@ export default function App() {
         activeSection={activeSection}
         onNavigateSection={navigateSection}
         onOpenAllProjects={openAllProjects}
-        onDownloadResume={handleDownloadResume}
+        onViewResume={() => setResumeOpen(true)}
         onActionToast={showToast}
       />
 
@@ -194,7 +196,7 @@ export default function App() {
                 config={config}
                 experience={experience}
                 onViewProjects={() => navigateSection('projects')}
-                onDownloadResume={handleDownloadResume}
+                onViewResume={() => setResumeOpen(true)}
               />
               <Projects
                 projects={projects}
@@ -211,7 +213,7 @@ export default function App() {
               <section className="border-t border-line/70 py-16 sm:py-20">
                 <div className="container-page grid grid-cols-1 gap-5 md:grid-cols-2">
                   <GitHubCTA config={config} onActionToast={showToast} />
-                  <ResumeCTA onDownloadResume={handleDownloadResume} />
+                  <ResumeCTA onViewResume={() => setResumeOpen(true)} />
                 </div>
               </section>
 
@@ -222,6 +224,14 @@ export default function App() {
 
         <Footer personalInfo={personalInfo} config={config} onNavigate={navigateSection} />
       </div>
+
+      <ResumeModal
+        isOpen={resumeOpen}
+        onClose={() => setResumeOpen(false)}
+        resumeUrl={config.RESUME_URL}
+        personalInfo={personalInfo}
+        onDownloadResume={handleDownloadResume}
+      />
 
       {toastMessage && (
         <div

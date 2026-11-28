@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSound } from '../../context/SoundContext.jsx';
 
 const base =
   'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors duration-150 select-none ' +
@@ -37,13 +38,21 @@ export const Button = React.forwardRef(
       iconPosition = 'left',
       href,
       type = 'button',
+      onClick,
+      silent = false,
       ...props
     },
     ref
   ) => {
+    const { playSound } = useSound();
     const sizeClass = variant === 'icon' ? iconSizes[size] || iconSizes.md : sizes[size] || sizes.md;
     const classes = `${base} ${variants[variant] || variants.primary} ${sizeClass} ${className}`;
     const iconEl = Icon ? <Icon className="h-4 w-4 shrink-0" aria-hidden="true" /> : null;
+
+    const handleClick = (e) => {
+      if (!silent) playSound();
+      onClick?.(e);
+    };
 
     const content = (
       <>
@@ -59,6 +68,7 @@ export const Button = React.forwardRef(
         <a
           ref={ref}
           href={href}
+          onClick={handleClick}
           className={classes}
           {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
           {...props}
@@ -69,7 +79,7 @@ export const Button = React.forwardRef(
     }
 
     return (
-      <button ref={ref} type={type} className={classes} {...props}>
+      <button ref={ref} type={type} onClick={handleClick} className={classes} {...props}>
         {content}
       </button>
     );

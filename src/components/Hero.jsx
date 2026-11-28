@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Database, Download, Laptop, Layers, MapPin } from 'lucide-react';
+import { ArrowRight, Database, Eye, Laptop, Layers } from 'lucide-react';
 import { Button } from './ui/Button';
 
 const fadeUp = (delay = 0) => ({
@@ -39,7 +39,7 @@ const renderSupportingText = (text = '') => {
   });
 };
 
-export const Hero = ({ personalInfo, config, experience, onViewProjects, onDownloadResume }) => {
+export const Hero = ({ personalInfo, experience, onViewProjects, onViewResume }) => {
   const { hero, name, school, degree, period } = personalInfo;
   const latestRole = experience?.[0];
   const aiTools = hero.aiTools || [];
@@ -47,7 +47,7 @@ export const Hero = ({ personalInfo, config, experience, onViewProjects, onDownl
   const facts = [
     { label: 'Education', value: degree, meta: `${school} · ${period}` },
     latestRole && { label: 'Experience', value: latestRole.position, meta: latestRole.company },
-    { label: 'Focus', value: hero.focusText, meta: hero.locationText },
+    { label: 'Focus', value: hero.focusText, meta: 'IT & Web Solutions' },
   ].filter(Boolean);
 
   return (
@@ -57,41 +57,30 @@ export const Hero = ({ personalInfo, config, experience, onViewProjects, onDownl
           01 — overview
         </motion.p>
 
-        {/* Identity */}
-        <motion.div {...fadeUp(0.03)} className="flex items-center gap-4">
-          <img
-            src={personalInfo.avatar || '/images/profile.jpg'}
-            alt={name}
-            width="64"
-            height="64"
-            onError={(e) => {
-              if (personalInfo.avatarFallback && e.currentTarget.src !== personalInfo.avatarFallback) {
-                e.currentTarget.src = personalInfo.avatarFallback;
-              }
-            }}
-            className="h-14 w-14 rounded-full border border-line object-cover object-top sm:h-16 sm:w-16"
-          />
+        {/* Identity Card (Larger Portrait Card + Name) */}
+        <motion.div {...fadeUp(0.03)} className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+          <div className="h-40 w-32 shrink-0 overflow-hidden rounded-2xl border border-line bg-surface p-1 shadow-card sm:h-44 sm:w-36">
+            <img
+              src={personalInfo.avatar || '/images/profile.jpg'}
+              alt={name}
+              onError={(e) => {
+                if (personalInfo.avatarFallback && e.currentTarget.src !== personalInfo.avatarFallback) {
+                  e.currentTarget.src = personalInfo.avatarFallback;
+                }
+              }}
+              className="h-full w-full rounded-xl object-cover object-top"
+            />
+          </div>
           <div className="min-w-0">
-            <p className="text-base font-semibold text-ink">{name}</p>
-            <p className="mt-0.5 flex items-center gap-1.5 text-sm text-ink-subtle">
-              <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              {hero.locationText}
-            </p>
+            <p className="eyebrow">{hero.label}</p>
+            <p className="mt-1.5 text-xl font-semibold tracking-tight text-ink sm:text-2xl">{name}</p>
+            <p className="mt-1 text-sm text-ink-muted">{degree}</p>
           </div>
         </motion.div>
 
         {/* Headline & Bio */}
         <motion.div {...fadeUp(0.06)} className="mt-8 max-w-3xl">
-          {config.AVAILABLE_FOR_WORK && (
-            <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-xs text-ink-muted">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-              </span>
-              {config.STATUS_TEXT}
-            </p>
-          )}
-          <h1 className="text-3xl font-semibold leading-[1.12] tracking-tight text-ink sm:text-5xl">
+          <h1 className="text-2xl font-semibold leading-[1.2] tracking-tight text-ink sm:text-3xl">
             {hero.heading}
             <span className="block text-ink-subtle">{hero.subheading}</span>
           </h1>
@@ -132,8 +121,8 @@ export const Hero = ({ personalInfo, config, experience, onViewProjects, onDownl
           <Button variant="primary" size="lg" icon={ArrowRight} iconPosition="right" onClick={onViewProjects}>
             Explore Projects
           </Button>
-          <Button variant="secondary" size="lg" icon={Download} onClick={onDownloadResume}>
-            Download Resume
+          <Button variant="secondary" size="lg" icon={Eye} onClick={onViewResume}>
+            View Resume
           </Button>
         </motion.div>
 
