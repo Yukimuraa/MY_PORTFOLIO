@@ -1,12 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Check, Github, ExternalLink, Image as ImageIcon } from 'lucide-react';
+import { X, Check, Github, ExternalLink, Image as ImageIcon, ChevronLeft, ChevronRight, Maximize2, ZoomIn, ZoomOut } from 'lucide-react';
 import { Button } from './ui/Button';
 
 export const ProjectModal = ({ project, onClose, onActionToast }) => {
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const screenshotsRef = useRef(null);
+
+  useEffect(() => {
+    setLightboxIndex(null);
+    setIsZoomed(false);
+  }, [project]);
+
+  useEffect(() => {
+    setIsZoomed(false);
+  }, [lightboxIndex]);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        if (lightboxIndex !== null) {
+          setLightboxIndex(null);
+        } else {
+          onClose();
+        }
+      }
     };
 
     if (project) {
@@ -17,11 +36,21 @@ export const ProjectModal = ({ project, onClose, onActionToast }) => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [project, onClose]);
+  }, [project, onClose, lightboxIndex]);
 
   if (!project) return null;
 
   const details = project.details || {};
+
+  const scrollScreenshots = (direction) => {
+    if (!screenshotsRef.current) return;
+    const container = screenshotsRef.current;
+    const scrollAmount = container.clientWidth;
+    container.scrollBy({
+      left: direction === 'next' ? scrollAmount : -scrollAmount,
+      behavior: 'smooth',
+    });
+  };
 
   const handleAction = (type) => {
     if (type === 'github') {
@@ -181,26 +210,77 @@ export const ProjectModal = ({ project, onClose, onActionToast }) => {
 
             {/* Screenshots Gallery */}
             <div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-3">
-                Screenshots
-              </h3>
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400">
+                  Screenshots
+                </h3>
+                {details.screenshots && details.screenshots.length > 1 && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] text-slate-400">
+                      Scroll horizontally ({details.screenshots.length})
+                    </span>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => scrollScreenshots('prev')}
+                        aria-label="Scroll screenshots left"
+                        className="p-1 rounded-lg border border-slate-700/80 bg-dark-850 text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => scrollScreenshots('next')}
+                        aria-label="Scroll screenshots right"
+                        className="p-1 rounded-lg border border-slate-700/80 bg-dark-850 text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
               {details.screenshots && details.screenshots.length > 0 ? (
-                <div className="space-y-4">
+                <div
+                  ref={screenshotsRef}
+                  className={
+                    details.screenshots.length > 1
+                      ? 'flex gap-4 overflow-x-auto snap-x snap-mandatory pb-3 scroll-smooth'
+                      : 'space-y-4'
+                  }
+                >
                   {details.screenshots.map((screen, idx) => (
                     <div
                       key={idx}
-                      className="rounded-xl overflow-hidden border border-slate-800 bg-dark-950 flex flex-col"
+                      onClick={() => setLightboxIndex(idx)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setLightboxIndex(idx);
+                        }
+                      }}
+                      className={`rounded-xl overflow-hidden border border-slate-800 hover:border-cyan-500/50 bg-dark-950 flex flex-col cursor-zoom-in group transition-colors ${
+                        details.screenshots.length > 1
+                          ? 'w-full shrink-0 snap-center'
+                          : 'w-full'
+                      }`}
                     >
-                      <div className="w-full flex items-center justify-center p-2 sm:p-3 bg-dark-950/90">
+                      <div className="relative w-full flex items-center justify-center p-2 bg-dark-950/90">
                         <img
                           src={screen.src}
                           alt={screen.alt || project.name}
-                          className="max-w-full max-h-[30rem] w-auto h-auto object-contain object-center rounded"
+                          className="w-full h-auto max-h-[34rem] object-contain object-center rounded"
                         />
+                        <span className="absolute top-3 right-3 p-1.5 rounded-lg bg-dark-900/85 border border-slate-700/80 text-slate-300 opacity-80 group-hover:opacity-100 group-hover:text-cyan-400 transition-all">
+                          <Maximize2 className="w-3.5 h-3.5" />
+                        </span>
                       </div>
                       {screen.title && (
-                        <div className="p-3 text-xs text-slate-400 border-t border-slate-800 bg-dark-900/60">
-                          {screen.title}
+                        <div className="p-3 text-xs text-slate-400 border-t border-slate-800 bg-dark-900/60 flex items-center justify-between gap-2">
+                          <span>{screen.title}</span>
+                          <span className="text-[11px] text-cyan-400/80 shrink-0">Click to expand</span>
                         </div>
                       )}
                     </div>
@@ -254,6 +334,97 @@ export const ProjectModal = ({ project, onClose, onActionToast }) => {
           </div>
         </motion.div>
       </div>
+
+      {/* Full-Screen Screenshot Lightbox */}
+      {lightboxIndex !== null && details.screenshots && details.screenshots[lightboxIndex] && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-sm"
+          onClick={() => setLightboxIndex(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Full screenshot preview"
+        >
+          <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsZoomed((prev) => !prev);
+              }}
+              aria-label={isZoomed ? 'Fit screenshot to screen' : 'Zoom screenshot to full resolution'}
+              className="p-2 rounded-full bg-dark-850/90 border border-slate-700 text-slate-200 hover:text-cyan-400 hover:border-cyan-500/60 transition-colors"
+              title={isZoomed ? 'Fit to screen' : 'Zoom in'}
+            >
+              {isZoomed ? <ZoomOut className="w-5 h-5" /> : <ZoomIn className="w-5 h-5" />}
+            </button>
+            <button
+              type="button"
+              onClick={() => setLightboxIndex(null)}
+              aria-label="Close full screenshot"
+              className="p-2 rounded-full bg-dark-850/90 border border-slate-700 text-slate-200 hover:text-white hover:border-cyan-500/60 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {details.screenshots.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex((prev) =>
+                    prev === 0 ? details.screenshots.length - 1 : prev - 1
+                  );
+                }}
+                aria-label="Previous screenshot"
+                className="absolute left-3 sm:left-6 p-2.5 rounded-full bg-dark-850/90 border border-slate-700 text-slate-200 hover:text-cyan-400 hover:border-cyan-500/60 transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex((prev) =>
+                    prev === details.screenshots.length - 1 ? 0 : prev + 1
+                  );
+                }}
+                aria-label="Next screenshot"
+                className="absolute right-3 sm:right-6 p-2.5 rounded-full bg-dark-850/90 border border-slate-700 text-slate-200 hover:text-cyan-400 hover:border-cyan-500/60 transition-colors"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </>
+          )}
+
+          <div
+            className="max-w-[96vw] max-h-[92vh] flex flex-col items-center gap-3"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={isZoomed ? 'max-w-[96vw] max-h-[84vh] overflow-auto rounded-lg border border-slate-800 bg-dark-950' : ''}>
+              <img
+                src={details.screenshots[lightboxIndex].src}
+                alt={details.screenshots[lightboxIndex].alt || project.name}
+                onClick={() => setIsZoomed((prev) => !prev)}
+                className={
+                  isZoomed
+                    ? 'w-[140vw] sm:w-[120vw] max-w-none h-auto cursor-zoom-out [image-rendering:-webkit-optimize-contrast]'
+                    : 'w-full max-w-[94vw] max-h-[84vh] h-auto object-contain rounded-lg shadow-2xl border border-slate-800 bg-dark-950 cursor-zoom-in [image-rendering:-webkit-optimize-contrast]'
+                }
+              />
+            </div>
+            <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-300 bg-dark-900/90 border border-slate-800 px-4 py-2 rounded-full">
+              <span>{details.screenshots[lightboxIndex].title || project.name}</span>
+              {details.screenshots.length > 1 && (
+                <span className="text-cyan-400 font-mono">
+                  {lightboxIndex + 1} / {details.screenshots.length}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </AnimatePresence>
   );
 };

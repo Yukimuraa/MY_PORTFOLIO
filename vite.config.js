@@ -17,9 +17,6 @@ function copyUserUploadsPlugin() {
 
       const fileMap = {
         'media_1790481394480.png': 'bao.png',
-        'media_1790481401038.png': 'localgrind.png',
-        'media_1790481408074.png': 'tagok.png',
-        'media_1790481420040.png': 'weathercrops.png',
         // Profile photo
         'media_1790488414559.jpg': '../profile.jpg',
         // Certificate photos
@@ -30,9 +27,6 @@ function copyUserUploadsPlugin() {
         'media_1790489262263.png': '../certificates/cert-sql.png',
         // Also map initial media hashes if different
         'media_1790479502522.png': 'bao.png',
-        'media_1790479502423.png': 'localgrind.png',
-        'media_1790479502296.png': 'tagok.png',
-        'media_1790479502363.png': 'weathercrops.png',
       };
 
       try {

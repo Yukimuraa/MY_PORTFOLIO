@@ -212,6 +212,11 @@ export const portfolioData = {
             title: "CHMSU Talisay Business Affairs Office Registration & Account Creation Interface",
             src: "/images/projects/bao.png",
             alt: "BAO System Account Registration Screen"
+          },
+          {
+            title: "CHMSU BAO Available Items & Online Ordering Interface",
+            src: "/images/projects/bao-items.jpg",
+            alt: "BAO System Available Items & Ordering Screen"
           }
         ],
         githubUrl: null,
@@ -262,108 +267,45 @@ export const portfolioData = {
       }
     },
     {
-      id: "tagok-pos",
-      name: "Tagok POS & Ordering System",
-      subtitle: "Counter Point-of-Sale & Order Management Platform",
-      category: "POS & Operations",
-      featured: true,
-      image: "/images/projects/tagok.png",
-      uploadedFallback: "file:///C:/Users/ASUS/.gemini/antigravity-ide/brain/071ab5e8-c730-4bd8-bfea-d312806f5209/.user_uploaded/media_1790481408074.png",
-      badge: "Practical POS Application",
-      shortDescription: "A touch-optimized point-of-sale ordering platform for managing cafe menus, live order tickets, and transaction totals.",
-      technologies: ["PHP", "MySQL", "JavaScript", "HTML", "CSS"],
-      features: [
-        "Categorized menu directory (Coffee, Non-Coffee, Tea, Pastries, Desserts, Snacks, Fries, Drinks)",
-        "Real-time Order Ticket with interactive quantity increments, decrements, and removal",
-        "Live subtotal and total charge calculation",
-        "Customer name and phone number logging for order dispatch",
-        "Dine-In and New Order transaction modes",
-        "Responsive grid card layout with item pricing and quick add-to-ticket triggers"
-      ],
-      details: {
-        overview: "Tagok is a point-of-sale web application designed for cafe and restaurant counters. It enables cashiers to rapidly process customer selections, calculate bills with automatic itemization, and maintain accurate order tickets.",
-        problem: "Handwritten food order tickets cause pricing errors, missed customer customization requests, and slow checkout queues during peak cafe hours.",
-        solution: "A structured, responsive POS dashboard featuring instant catalog filtering, dynamic ticket state management, and real-time total calculation.",
-        myRole: "Frontend & Database Developer (UI design, catalog item schema, dynamic order ticket calculation logic).",
-        challenges: "Implementing responsive order ticket recalculations with smooth state updates without page reloading.",
-        whatILearned: "Managing dynamic cart state in JavaScript, designing cashier-centric UI ergonomics, and structuring relational product tables.",
-        screenshots: [
-          {
-            title: "Tagok POS Catalog & Live Order Ticket Interface",
-            src: "/images/projects/tagok.png",
-            alt: "Tagok POS Dashboard Screenshot"
-          }
-        ],
-        githubUrl: null,
-        liveDemoUrl: null
-      }
-    },
-    {
       id: "local-grind",
       name: "The Local Grind Counter POS",
       subtitle: "Specialty Cafe Touchpoint & Ordering Interface",
       category: "POS & Operations",
       featured: true,
       image: "/images/projects/localgrind.png",
-      uploadedFallback: "file:///C:/Users/ASUS/.gemini/antigravity-ide/brain/071ab5e8-c730-4bd8-bfea-d312806f5209/.user_uploaded/media_1790481401038.png",
+      uploadedFallback: null,
       badge: "Counter Touchpoint",
-      shortDescription: "A modern, branded counter welcome and ordering initiation terminal interface designed for specialty coffee operations.",
+      shortDescription: "A modern, branded counter welcome, POS ordering terminal, and admin sales analytics platform designed for specialty coffee operations.",
       technologies: ["React", "JavaScript", "CSS", "HTML"],
       features: [
-        "Sleek dark-mode aesthetic with branded typography and custom badge graphics",
-        "Single-touch 'Start Order' workflow trigger for cashier and self-service kiosks",
-        "Full-screen responsive viewport layout optimized for counter displays",
-        "Lightweight UI footprint with zero latency for fast counter transitions"
+        "Clean branded counter welcome screen with single-touch 'Start Order' trigger",
+        "Categorized menu directory (Coffee, Non-Coffee, Tea, Pastries, Desserts, Snacks, Fries)",
+        "Real-time Order Ticket with Dine-In / New Order modes and customer details",
+        "Admin Console Dashboard with Today's/Weekly/Monthly sales and order status charts",
+        "Full-screen responsive viewport layout optimized for counter displays"
       ],
       details: {
-        overview: "A specialized counter terminal welcome interface built for The Local Grind coffee shop, providing an elegant and distraction-free entry point into the ordering workflow.",
-        problem: "Cluttered counter display screens make it difficult for new counter staff to quickly launch new tickets and distract customers at point-of-sale.",
-        solution: "A minimalist, high-contrast welcome interface with bold call-to-action triggers, customized for cafe tablet displays and touch terminals.",
+        overview: "A specialized counter terminal and admin management platform built for The Local Grind coffee shop, combining a distraction-free welcome screen, fast POS order ticket workflow, and real-time sales analytics.",
+        problem: "Cluttered counter display screens and manual order tracking make it difficult for counter staff to quickly launch new tickets and monitor daily cafe sales.",
+        solution: "A minimalist welcome interface paired with a responsive category-driven POS terminal and an integrated admin console for sales overview, order status, and best-selling product metrics.",
         myRole: "Frontend Developer & UI Designer.",
-        challenges: "Achieving balanced visual typography and aesthetic contrast while keeping the screen accessible and legible under ambient cafe lighting.",
-        whatILearned: "Modern CSS layout techniques, minimalist UI principles, and touch-target optimization for kiosk hardware.",
+        challenges: "Achieving balanced visual typography and aesthetic contrast across both the welcome kiosk screen and the data-rich admin dashboard.",
+        whatILearned: "Modern CSS layout techniques, minimalist UI principles, POS cart state management, and touch-target optimization for kiosk hardware.",
         screenshots: [
           {
             title: "The Local Grind Counter POS Welcome & Start Screen",
             src: "/images/projects/localgrind.png",
-            alt: "The Local Grind Counter Interface Screenshot"
-          }
-        ],
-        githubUrl: null,
-        liveDemoUrl: null
-      }
-    },
-    {
-      id: "weathercrops",
-      name: "WeatherCrops",
-      subtitle: "Agricultural Weather & Decision Support App",
-      category: "Mobile",
-      featured: true,
-      image: "/images/projects/weathercrops.png",
-      uploadedFallback: "file:///C:/Users/ASUS/.gemini/antigravity-ide/brain/071ab5e8-c730-4bd8-bfea-d312806f5209/.user_uploaded/media_1790481420040.png",
-      badge: "Mobile Application",
-      shortDescription: "A Flutter-based mobile application that combines weather information and agricultural data to provide useful information for crop-related decision making.",
-      technologies: ["Flutter", "Dart", "Open-Meteo API"],
-      features: [
-        "Real-time weather tracking (temperature, humidity, precipitation, wind, soil temperature)",
-        "Location-based coordinates (configured for Talisay City, Negros Occidental: 10.7350, 122.9670)",
-        "7-day daily forecast cards with condition indicators",
-        "Agricultural and crop-related decision insights",
-        "Live Open-Meteo API integration",
-        "Clean, dark-themed mobile dashboard interface"
-      ],
-      details: {
-        overview: "WeatherCrops demonstrates my experience with mobile application development, API integration, and presenting external data through a user-friendly interface.",
-        problem: "Smallholder farmers and local agriculturalists need accessible, localized weather forecasts and soil conditions on their mobile devices to plan irrigation and harvesting.",
-        solution: "A sleek Flutter mobile dashboard that queries Open-Meteo REST endpoints and transforms meteorological telemetry into simple, readable indicators for farm planning.",
-        myRole: "Mobile Application Developer (Flutter & Dart)",
-        challenges: "Handling asynchronous REST data fetches, managing offline fallbacks when GPS or network signals are weak, and structuring clean Flutter widget trees.",
-        whatILearned: "State management in Flutter, Dart HTTP serialization, and designing clean dark-mode mobile UI layouts.",
-        screenshots: [
+            alt: "The Local Grind Counter Welcome Screen"
+          },
           {
-            title: "WeatherCrops Mobile Farm Dashboard (Talisay City, Negros Occidental)",
-            src: "/images/projects/weathercrops.png",
-            alt: "WeatherCrops Farm Dashboard Screenshot"
+            title: "The Local Grind Admin Console — Sales & Order Analytics Dashboard",
+            src: "/images/projects/localgrind-dashboard.jpg",
+            alt: "The Local Grind Admin Console Dashboard Screenshot"
+          },
+          {
+            title: "The Local Grind POS Menu & Live Order Ticket Interface",
+            src: "/images/projects/localgrind-pos.jpg",
+            alt: "The Local Grind POS Menu and Order Ticket Screenshot"
           }
         ],
         githubUrl: null,
@@ -376,7 +318,7 @@ export const portfolioData = {
       subtitle: "Personal Productivity Web App",
       category: "Web Systems",
       featured: true,
-      image: "/images/projects/urnotes.svg",
+      image: "/images/projects/urnotes-loading.png",
       uploadedFallback: null,
       badge: "Full-Stack Productivity PWA",
       shortDescription: "A modern productivity application for organizing notes, sticky notes, tasks, and deleted items in one place.",
@@ -397,7 +339,23 @@ export const portfolioData = {
         myRole: "Full Stack Developer (Laravel REST API & React/Vite Frontend)",
         challenges: "Implementing responsive state management across multiple productivity modules while ensuring clean REST API synchronization with Laravel.",
         whatILearned: "Component architecture in React with modern Vite tooling, Laravel API resource controllers, and PWA service worker configurations.",
-        screenshots: [],
+        screenshots: [
+          {
+            title: "UrNotes Progressive Web App (PWA) Launch & Loading Screen",
+            src: "/images/projects/urnotes-loading.png",
+            alt: "UrNotes Loading Screen Screenshot"
+          },
+          {
+            title: "UrNotes Dashboard — Notes, Sticky Notes & Task Overview",
+            src: "/images/projects/urnotes-dashboard.png",
+            alt: "UrNotes Dashboard Screenshot"
+          },
+          {
+            title: "UrNotes Settings — Custom Theme Colors, Quick Presets & PWA Info",
+            src: "/images/projects/urnotes-settings.png",
+            alt: "UrNotes Settings & Presets Screenshot"
+          }
+        ],
         githubUrl: null,
         liveDemoUrl: null
       }
