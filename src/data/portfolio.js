@@ -181,6 +181,103 @@ export const portfolioData = {
 
   projects: [
     {
+      id: "timeless-by-design",
+      name: "TIMELESS BY DESIGN.",
+      subtitle: "Architectural Outerwear, Essential Denim & Modern Silhouettes",
+      category: "Web Systems",
+      featured: true,
+      image: "/images/projects/timeless-hero.jpg",
+      uploadedFallback: null,
+      badge: "Editorial E-Commerce Lookbook",
+      shortDescription: "Architectural outerwear, essential denim, and modern silhouettes crafted for enduring form in an editorial fashion lookbook & e-commerce experience.",
+      technologies: ["React", "Tailwind CSS", "JavaScript", "Framer Motion"],
+      features: [
+        "Editorial hero showcase with high-contrast luxury fashion typography",
+        "Interactive multi-look carousel (Looks 01–08) with live garment pairing",
+        "Per-piece size selector (S, M, L, XL), quantity controls, and Add to Bag cart state",
+        "The New Silhouettes lookbook grid (Models 09–12) with individual editorial detail pages",
+        "Styled Pieces breakdown with horizontal garment navigation and pricing"
+      ],
+      details: {
+        overview: "TIMELESS BY DESIGN. (TEMPUS) is a minimalist luxury fashion lookbook and e-commerce storefront designed around architectural outerwear, essential denim, and modern streetwear silhouettes.",
+        problem: "Traditional online clothing stores separate editorial lookbooks from shopping flows, forcing customers to hunt through product grids to recreate styled outfits.",
+        solution: "An integrated editorial commerce interface where visitors browse curated looks and silhouettes, inspect individual styled pieces, select sizes and quantities, and add complete outfits to their shopping bag in one view.",
+        myRole: "Frontend Developer & UI/UX Designer",
+        challenges: "Balancing spacious, gallery-grade editorial typography with responsive multi-garment cart controls and smooth lookbook transitions.",
+        whatILearned: "Designing luxury e-commerce layouts, coordinating synchronized lookbook-to-cart state, and structuring editorial detail views.",
+        screenshots: [
+          {
+            title: "TIMELESS BY DESIGN. — Editorial Hero & Collection Landing",
+            src: "/images/projects/timeless-hero.jpg",
+            alt: "TIMELESS BY DESIGN Hero Landing Screenshot"
+          },
+          {
+            title: "TIMELESS BY DESIGN. — Interactive Lookbook & Shop-the-Look Cart Panel (Look 05)",
+            src: "/images/projects/timeless-lookbook.jpg",
+            alt: "TIMELESS BY DESIGN Interactive Lookbook Screenshot"
+          },
+          {
+            title: "The New Silhouettes — Streetwear Collection Grid (Models 09–12)",
+            src: "/images/projects/timeless-silhouettes.jpg",
+            alt: "The New Silhouettes Collection Screenshot"
+          },
+          {
+            title: "Streetwear Editorial — Model 09 Styled Pieces Detail View",
+            src: "/images/projects/timeless-model09.png",
+            alt: "Model 09 Streetwear Editorial Detail Screenshot"
+          }
+        ],
+        githubUrl: null,
+        liveDemoUrl: null
+      }
+    },
+    {
+      id: "tempus-ojt-tracker",
+      name: "Tempus - OJT Hours Tracker",
+      subtitle: "Student Internship Time Logging & DTTR Progress PWA",
+      category: "Web Systems",
+      featured: true,
+      image: "/images/projects/tempus-home.png",
+      uploadedFallback: null,
+      badge: "Installable Productivity PWA",
+      shortDescription: "A modern web application for student interns to log daily OJT hours, track cumulative progress, and export official DTTR reports.",
+      technologies: ["React", "JavaScript", "Tailwind CSS", "PWA"],
+      features: [
+        "Required, completed, and remaining OJT hours tracking with completion rate metrics",
+        "Daily AM/PM session time logging with activity descriptions and approval status",
+        "Cumulative OJT requirement progress bar and milestone indicators",
+        "Official Daily Time & Tasks Record (DTTR) PDF export in Long Bond, A4, and Letter formats",
+        "Installable Progressive Web App (PWA) with mobile-first responsive views and dark mode"
+      ],
+      details: {
+        overview: "Tempus is an installable Progressive Web App (PWA) built for student interns to simplify tracking On-the-Job Training (OJT) hours, documenting daily tasks, monitoring progress toward required hours, and generating official DTTR reports.",
+        problem: "Student interns often rely on scattered spreadsheets or paper logbooks to track AM/PM sessions, making it error-prone to compute remaining hours and format official DTTR submissions.",
+        solution: "A clean, installable web platform that centralizes session time logs, computes real-time completion percentages, and exports formatted DTTR documents ready for submission.",
+        myRole: "Full Stack Developer & UI/UX Designer",
+        challenges: "Accurately computing rendered hours across split AM/PM sessions and designing printable DTTR layouts that fit multiple paper sizes (Long Bond, A4, Letter).",
+        whatILearned: "Building installable PWA workflows, designing responsive student dashboards for both desktop and mobile, and structuring printable report exports.",
+        screenshots: [
+          {
+            title: "Tempus Landing Page & Live OJT Progress Preview",
+            src: "/images/projects/tempus-home.png",
+            alt: "Tempus OJT Hours Tracker Landing Page Screenshot"
+          },
+          {
+            title: "Tempus Dashboard — Required, Completed & Recent Activity Logs",
+            src: "/images/projects/tempus-dashboard.png",
+            alt: "Tempus Student Dashboard Screenshot"
+          },
+          {
+            title: "Tempus Student Portal Sign-In & Mobile PWA Views",
+            src: "/images/projects/tempus-login.jpg",
+            alt: "Tempus Student Portal Login and Mobile Views Screenshot"
+          }
+        ],
+        githubUrl: null,
+        liveDemoUrl: null
+      }
+    },
+    {
       id: "bao-system",
       name: "BAO Information System",
       subtitle: "University Business Affairs Office Management Platform",
@@ -469,52 +566,6 @@ export const portfolioData = {
         challenges: "Designing reliable SQL queries to detect overlapping time slots and prevent double bookings across diverse facilities.",
         whatILearned: "Implementing robust validation rules, database transactions, and relational constraints in Laravel.",
         screenshots: [],
-        githubUrl: null,
-        liveDemoUrl: null
-      }
-    },
-    {
-      id: "tempus-ojt-tracker",
-      name: "Tempus - OJT Hours Tracker",
-      subtitle: "Student Internship Time Logging & DTTR Progress PWA",
-      category: "Web Systems",
-      featured: true,
-      image: "/images/projects/tempus-home.png",
-      uploadedFallback: null,
-      badge: "Installable Productivity PWA",
-      shortDescription: "A modern web application for student interns to log daily OJT hours, track cumulative progress, and export official DTTR reports.",
-      technologies: ["React", "JavaScript", "Tailwind CSS", "PWA"],
-      features: [
-        "Required, completed, and remaining OJT hours tracking with completion rate metrics",
-        "Daily AM/PM session time logging with activity descriptions and approval status",
-        "Cumulative OJT requirement progress bar and milestone indicators",
-        "Official Daily Time & Tasks Record (DTTR) PDF export in Long Bond, A4, and Letter formats",
-        "Installable Progressive Web App (PWA) with mobile-first responsive views and dark mode"
-      ],
-      details: {
-        overview: "Tempus is an installable Progressive Web App (PWA) built for student interns to simplify tracking On-the-Job Training (OJT) hours, documenting daily tasks, monitoring progress toward required hours, and generating official DTTR reports.",
-        problem: "Student interns often rely on scattered spreadsheets or paper logbooks to track AM/PM sessions, making it error-prone to compute remaining hours and format official DTTR submissions.",
-        solution: "A clean, installable web platform that centralizes session time logs, computes real-time completion percentages, and exports formatted DTTR documents ready for submission.",
-        myRole: "Full Stack Developer & UI/UX Designer",
-        challenges: "Accurately computing rendered hours across split AM/PM sessions and designing printable DTTR layouts that fit multiple paper sizes (Long Bond, A4, Letter).",
-        whatILearned: "Building installable PWA workflows, designing responsive student dashboards for both desktop and mobile, and structuring printable report exports.",
-        screenshots: [
-          {
-            title: "Tempus Landing Page & Live OJT Progress Preview",
-            src: "/images/projects/tempus-home.png",
-            alt: "Tempus OJT Hours Tracker Landing Page Screenshot"
-          },
-          {
-            title: "Tempus Dashboard — Required, Completed & Recent Activity Logs",
-            src: "/images/projects/tempus-dashboard.png",
-            alt: "Tempus Student Dashboard Screenshot"
-          },
-          {
-            title: "Tempus Student Portal Sign-In & Mobile PWA Views",
-            src: "/images/projects/tempus-login.jpg",
-            alt: "Tempus Student Portal Login and Mobile Views Screenshot"
-          }
-        ],
         githubUrl: null,
         liveDemoUrl: null
       }
