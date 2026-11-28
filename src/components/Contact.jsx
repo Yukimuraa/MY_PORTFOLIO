@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import { Mail, Linkedin, Github, Send, Copy, Check, MapPin } from 'lucide-react';
+import { Mail, Linkedin, Github, Send, Copy, Check, MapPin, ArrowUpRight } from 'lucide-react';
 import { Section } from './ui/Section';
 import { Button } from './ui/Button';
 
-export const Contact = ({ config, onActionToast }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
+const displayUrl = (url = '') => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 
+export const Contact = ({ config, personalInfo, onActionToast }) => {
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [copied, setCopied] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null);
 
@@ -20,249 +16,189 @@ export const Contact = ({ config, onActionToast }) => {
   };
 
   const handleCopyEmail = () => {
-    if (config.EMAIL) {
-      navigator.clipboard.writeText(config.EMAIL).then(() => {
-        setCopied(true);
-        onActionToast('Email address copied to clipboard!');
-        setTimeout(() => setCopied(false), 3000);
-      });
-    } else {
+    if (!config.EMAIL) {
       onActionToast('Email address will be configured in src/data/portfolio.js');
+      return;
     }
-  };
-
-  const handleSocialClick = (type) => {
-    if (type === 'linkedin') {
-      if (config.LINKEDIN_URL) {
-        window.open(config.LINKEDIN_URL, '_blank', 'noopener,noreferrer');
-      } else {
-        onActionToast('LinkedIn profile link will be configured in src/data/portfolio.js');
-      }
-    } else if (type === 'github') {
-      if (config.GITHUB_URL) {
-        window.open(config.GITHUB_URL, '_blank', 'noopener,noreferrer');
-      } else {
-        onActionToast('GitHub link will be configured in src/data/portfolio.js');
-      }
-    }
+    navigator.clipboard.writeText(config.EMAIL).then(() => {
+      setCopied(true);
+      onActionToast('Email address copied to clipboard!');
+      setTimeout(() => setCopied(false), 3000);
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
-      setStatusMessage({
-        type: 'error',
-        text: 'Please fill out Name, Email, and Message before submitting.',
-      });
+      setStatusMessage({ type: 'error', text: 'Please fill out Name, Email, and Message before submitting.' });
       return;
     }
 
     const emailTarget = config.EMAIL || 'contact@example.com';
     const subject = encodeURIComponent(formData.subject || `Inquiry from ${formData.name}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
-
-    // Prepare mailto link
-    const mailtoLink = `mailto:${emailTarget}?subject=${subject}&body=${body}`;
-    window.location.href = mailtoLink;
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
+    window.location.href = `mailto:${emailTarget}?subject=${subject}&body=${body}`;
 
     setStatusMessage({
       type: 'success',
-      text: 'Opening your default email client... If it did not launch automatically, feel free to contact me directly using the email address on the left.',
+      text: 'Opening your default email client... If it did not launch automatically, feel free to contact me directly using the email address listed here.',
     });
     onActionToast('Draft inquiry opened in your email app.');
   };
 
+  const channels = [
+    config.LINKEDIN_URL && { label: 'LinkedIn', value: displayUrl(config.LINKEDIN_URL), href: config.LINKEDIN_URL, icon: Linkedin },
+    config.GITHUB_URL && { label: 'GitHub', value: displayUrl(config.GITHUB_URL), href: config.GITHUB_URL, icon: Github },
+  ].filter(Boolean);
+
   return (
     <Section
       id="contact"
-      tag="Get In Touch"
+      index="09"
+      tag="contact"
       title="Let's Work Together"
       subtitle="I'm currently open to entry-level opportunities in IT Support, IT Operations, Systems Administration, Web Development, and other technology-related roles. If you're looking for someone who is willing to learn, adaptable, and ready to contribute, I'd be happy to connect."
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-        {/* Left Column: Direct channels and location */}
-        <div className="lg:col-span-5 space-y-5">
-          <div className="bg-dark-800/90 border border-slate-800/90 rounded-3xl p-6 sm:p-7 shadow-dark-card space-y-4">
-            <h3 className="text-lg font-bold text-white mb-2">
-              Direct Communication
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-4">
-              Feel free to reach out directly via email or connect through LinkedIn:
-            </p>
-
-            {/* Email item */}
-            <div
-              onClick={handleCopyEmail}
-              className="p-3.5 rounded-xl bg-dark-850 border border-slate-800 hover:border-cyan-500/50 flex items-center justify-between cursor-pointer transition-colors group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
-                  <Mail className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-[11px] font-semibold uppercase text-slate-400">
-                    Email Address
-                  </div>
-                  <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-cyan-400 transition-colors">
-                    {config.EMAIL || 'Configure in portfolio.js'}
-                  </div>
-                </div>
-              </div>
-              <button
-                type="button"
-                className="text-slate-400 group-hover:text-cyan-400 p-1"
-                aria-label="Copy Email"
-              >
-                {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-              </button>
-            </div>
-
-            {/* LinkedIn Item */}
-            <div
-              onClick={() => handleSocialClick('linkedin')}
-              className="p-3.5 rounded-xl bg-dark-850 border border-slate-800 hover:border-cyan-500/50 flex items-center justify-between cursor-pointer transition-colors group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
-                  <Linkedin className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-[11px] font-semibold uppercase text-slate-400">
-                    LinkedIn
-                  </div>
-                  <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-cyan-400 transition-colors">
-                    linkedin.com/in/joemarie-damasing-8b2795317
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* GitHub Item */}
-            <div
-              onClick={() => handleSocialClick('github')}
-              className="p-3.5 rounded-xl bg-dark-850 border border-slate-800 hover:border-cyan-500/50 flex items-center justify-between cursor-pointer transition-colors group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
-                  <Github className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-[11px] font-semibold uppercase text-slate-400">
-                    GitHub
-                  </div>
-                  <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-cyan-400 transition-colors">
-                    github.com/Yukimuraa
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Location note */}
-          <div className="bg-dark-800/90 border border-slate-800/90 rounded-2xl p-5 flex items-center gap-3.5 text-xs sm:text-sm text-slate-300">
-            <MapPin className="w-5 h-5 text-cyan-400 shrink-0" />
-            <span>
-              Based in <strong>Negros Occidental, Philippines</strong>. Open to on-site, hybrid, and remote entry-level roles.
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        {/* Direct channels */}
+        <div className="space-y-3">
+          <button
+            type="button"
+            onClick={handleCopyEmail}
+            className="group flex w-full items-center justify-between gap-4 rounded-xl border border-line bg-surface p-4 text-left transition-colors hover:border-line-strong"
+          >
+            <span className="flex min-w-0 items-center gap-3">
+              <Mail className="h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+              <span className="min-w-0">
+                <span className="eyebrow block">Email</span>
+                <span className="mt-1 block truncate text-sm font-medium text-ink">
+                  {config.EMAIL || 'Configure in portfolio.js'}
+                </span>
+              </span>
             </span>
-          </div>
+            <span className="shrink-0 text-ink-subtle group-hover:text-ink" aria-label="Copy email">
+              {copied ? <Check className="h-4 w-4 text-accent" /> : <Copy className="h-4 w-4" />}
+            </span>
+          </button>
+
+          {channels.map(({ label, value, href, icon: Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between gap-4 rounded-xl border border-line bg-surface p-4 transition-colors hover:border-line-strong"
+            >
+              <span className="flex min-w-0 items-center gap-3">
+                <Icon className="h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+                <span className="min-w-0">
+                  <span className="eyebrow block">{label}</span>
+                  <span className="mt-1 block truncate text-sm font-medium text-ink">{value}</span>
+                </span>
+              </span>
+              <ArrowUpRight className="h-4 w-4 shrink-0 text-ink-subtle transition-colors group-hover:text-ink" aria-hidden="true" />
+            </a>
+          ))}
+
+          <p className="flex items-start gap-3 px-1 pt-3 text-sm leading-relaxed text-ink-muted">
+            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+            <span>
+              Based in <span className="font-medium text-ink">{personalInfo.location}</span>. Open to on-site, hybrid, and
+              remote entry-level roles.
+            </span>
+          </p>
         </div>
 
-        {/* Right Column: Contact Form */}
-        <div className="lg:col-span-7">
-          <div className="bg-dark-800/90 border border-slate-700/80 rounded-3xl p-6 sm:p-9 shadow-dark-card">
-            {statusMessage && (
-              <div
-                className={`p-4 rounded-xl text-xs sm:text-sm mb-5 ${
-                  statusMessage.type === 'success'
-                    ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-300'
-                    : 'bg-red-500/10 border border-red-500/30 text-red-300'
-                }`}
-              >
-                {statusMessage.text}
-              </div>
-            )}
+        {/* Form */}
+        <div className="rounded-xl border border-line bg-surface p-6 sm:p-8">
+          {statusMessage && (
+            <div
+              role="alert"
+              className={`mb-5 rounded-lg border p-3.5 text-sm ${
+                statusMessage.type === 'success'
+                  ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300'
+                  : 'border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300'
+              }`}
+            >
+              {statusMessage.text}
+            </div>
+          )}
 
-            <form onSubmit={handleSubmit} noValidate className="space-y-4">
+          <form onSubmit={handleSubmit} noValidate className="space-y-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="contact-name" className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Your Name <span className="text-cyan-400">*</span>
+                <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium text-ink">
+                  Name <span className="text-ink-subtle">*</span>
                 </label>
                 <input
                   id="contact-name"
                   name="name"
                   type="text"
                   required
-                  placeholder="e.g., Alex Johnson"
+                  autoComplete="name"
+                  placeholder="Your name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl bg-dark-850 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
+                  className="form-input"
                 />
               </div>
-
               <div>
-                <label htmlFor="contact-email" className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Your Email <span className="text-cyan-400">*</span>
+                <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium text-ink">
+                  Email <span className="text-ink-subtle">*</span>
                 </label>
                 <input
                   id="contact-email"
                   name="email"
                   type="email"
                   required
-                  placeholder="e.g., alex@company.com"
+                  autoComplete="email"
+                  placeholder="you@company.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl bg-dark-850 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
+                  className="form-input"
                 />
               </div>
+            </div>
 
-              <div>
-                <label htmlFor="contact-subject" className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Subject
-                </label>
-                <input
-                  id="contact-subject"
-                  name="subject"
-                  type="text"
-                  placeholder="e.g., IT Support Opportunity / Portfolio Inquiry"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl bg-dark-850 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
-                />
-              </div>
+            <div>
+              <label htmlFor="contact-subject" className="mb-1.5 block text-sm font-medium text-ink">
+                Subject
+              </label>
+              <input
+                id="contact-subject"
+                name="subject"
+                type="text"
+                placeholder="IT Support Opportunity / Portfolio Inquiry"
+                value={formData.subject}
+                onChange={handleChange}
+                className="form-input"
+              />
+            </div>
 
-              <div>
-                <label htmlFor="contact-message" className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Message <span className="text-cyan-400">*</span>
-                </label>
-                <textarea
-                  id="contact-message"
-                  name="message"
-                  required
-                  rows={4}
-                  placeholder="Write your message here..."
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl bg-dark-850 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors resize-y"
-                />
-              </div>
+            <div>
+              <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium text-ink">
+                Message <span className="text-ink-subtle">*</span>
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                required
+                rows={5}
+                placeholder="Write your message here..."
+                value={formData.message}
+                onChange={handleChange}
+                className="form-input resize-y"
+              />
+            </div>
 
-              <Button
-                type="submit"
-                variant="primary"
-                size="md"
-                icon={Send}
-                className="w-full justify-center mt-2"
-              >
-                Send Message
-              </Button>
+            <Button type="submit" variant="primary" size="lg" icon={Send} className="w-full">
+              Send Message
+            </Button>
 
-              <p className="text-[11px] text-slate-400 text-center mt-3 leading-relaxed">
-                Note: This form prepares a draft message directly in your email client. No third-party data tracking or simulated backend storage is used.
-              </p>
-            </form>
-          </div>
+            <p className="text-center text-xs leading-relaxed text-ink-subtle">
+              This form prepares a draft message in your email client. No third-party tracking or backend storage is used.
+            </p>
+          </form>
         </div>
       </div>
     </Section>

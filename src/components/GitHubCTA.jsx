@@ -1,40 +1,31 @@
 import React from 'react';
-import { Github, Code2 } from 'lucide-react';
+import { Github, ArrowUpRight } from 'lucide-react';
 import { Button } from './ui/Button';
 
-export const GitHubCTA = ({ config, onActionToast }) => {
-  const handleClick = () => {
-    if (config.GITHUB_URL) {
-      window.open(config.GITHUB_URL, '_blank', 'noopener,noreferrer');
-    } else {
-      onActionToast('GitHub profile link will be configured soon in src/data/portfolio.js');
-    }
-  };
-
-  return (
-    <div className="bg-dark-800/90 border border-slate-800/90 hover:border-cyan-500/40 rounded-3xl p-8 sm:p-9 shadow-dark-card flex flex-col justify-between transition-colors">
-      <div>
-        <div className="w-12 h-12 rounded-2xl bg-dark-750 border border-slate-700 text-cyan-400 flex items-center justify-center mb-5">
-          <Github className="w-6 h-6" />
-        </div>
-        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2.5">
-          Explore My Code
-        </h3>
-        <p className="text-sm text-slate-300 leading-relaxed mb-6">
-          I use GitHub to document and share my development projects, experiments, and learning progress.
-        </p>
-      </div>
-
-      <div>
+export const GitHubCTA = ({ config, onActionToast }) => (
+  <div className="flex flex-col justify-between rounded-xl border border-line bg-surface p-6 sm:p-8">
+    <div>
+      <Github className="h-5 w-5 text-ink-subtle" aria-hidden="true" />
+      <h3 className="mt-5 text-lg font-semibold tracking-tight text-ink">Explore My Code</h3>
+      <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+        I use GitHub to document and share my development projects, experiments, and learning progress.
+      </p>
+    </div>
+    <div className="mt-6">
+      {config.GITHUB_URL ? (
+        <Button href={config.GITHUB_URL} variant="secondary" icon={ArrowUpRight} iconPosition="right">
+          Visit My GitHub
+        </Button>
+      ) : (
         <Button
-          variant="primary"
-          size="md"
-          icon={Github}
-          onClick={handleClick}
+          variant="secondary"
+          icon={ArrowUpRight}
+          iconPosition="right"
+          onClick={() => onActionToast('GitHub profile link will be configured soon in src/data/portfolio.js')}
         >
           Visit My GitHub
         </Button>
-      </div>
+      )}
     </div>
-  );
-};
+  </div>
+);

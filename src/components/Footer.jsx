@@ -1,103 +1,79 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUp, Github, Linkedin, Mail } from 'lucide-react';
+import { Button } from './ui/Button';
 
-export const Footer = ({ personalInfo, config, onActionToast }) => {
+export const Footer = ({ personalInfo, config, onNavigate }) => {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 400);
-    };
+    const handleScroll = () => setShowBackToTop(window.scrollY > 600);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  const handleSocial = (type) => {
-    if (type === 'github') {
-      if (config.GITHUB_URL) window.open(config.GITHUB_URL, '_blank', 'noopener,noreferrer');
-      else onActionToast('GitHub link will be configured in src/data/portfolio.js');
-    } else if (type === 'linkedin') {
-      if (config.LINKEDIN_URL) window.open(config.LINKEDIN_URL, '_blank', 'noopener,noreferrer');
-      else onActionToast('LinkedIn link will be configured in src/data/portfolio.js');
-    } else if (type === 'email') {
-      if (config.EMAIL) window.location.href = `mailto:${config.EMAIL}`;
-      else onActionToast('Email address will be configured in src/data/portfolio.js');
-    }
-  };
+  const socials = [
+    config.GITHUB_URL && { label: 'GitHub', href: config.GITHUB_URL, icon: Github },
+    config.LINKEDIN_URL && { label: 'LinkedIn', href: config.LINKEDIN_URL, icon: Linkedin },
+    config.EMAIL && { label: 'Email', href: `mailto:${config.EMAIL}`, icon: Mail },
+  ].filter(Boolean);
+
+  const links = [
+    { id: 'projects', label: 'Projects' },
+    { id: 'about', label: 'About' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'contact', label: 'Contact' },
+  ];
 
   return (
-    <footer className="bg-dark-950 border-t border-slate-800/80 pt-16 pb-12 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-10 border-b border-slate-800/80">
+    <footer className="border-t border-line">
+      <div className="container-page py-12">
+        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div>
-            <h4 className="text-base sm:text-lg font-bold tracking-wider text-white">
-              {personalInfo.name.toUpperCase()}
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              BS Information Systems Graduate
-            </p>
-            <p className="text-xs text-cyan-400 font-medium mt-0.5">
-              IT Support • Web Development • Information Systems
-            </p>
+            <p className="text-sm font-semibold text-ink">{personalInfo.name}</p>
+            <p className="mt-1 text-sm text-ink-subtle">{personalInfo.hero.focusText}</p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => handleSocial('github')}
-              className="p-2.5 rounded-xl bg-dark-850 border border-slate-700/80 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"
-              aria-label="GitHub Profile"
-            >
-              <Github className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSocial('linkedin')}
-              className="p-2.5 rounded-xl bg-dark-850 border border-slate-700/80 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"
-              aria-label="LinkedIn Profile"
-            >
-              <Linkedin className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSocial('email')}
-              className="p-2.5 rounded-xl bg-dark-850 border border-slate-700/80 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-colors"
-              aria-label="Send Email"
-            >
-              <Mail className="w-4 h-4" />
-            </button>
-          </div>
+          <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Footer navigation">
+            {links.map((link) => (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate(link.id);
+                }}
+                className="text-sm text-ink-subtle transition-colors hover:text-ink"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
         </div>
 
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <div>
-            © 2026 Joemarie D. Damasing. All rights reserved.
+        <div className="mt-10 flex flex-col-reverse gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-ink-subtle">© 2026 {personalInfo.name}. All rights reserved.</p>
+          <div className="flex items-center gap-2">
+            {socials.map(({ label, href, icon: Icon }) => (
+              <Button key={label} variant="icon" size="sm" href={href} aria-label={label} title={label}>
+                <Icon className="h-4 w-4" />
+              </Button>
+            ))}
           </div>
-          <button
-            type="button"
-            onClick={scrollToTop}
-            className="text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-1.5"
-          >
-            <span>Back to top</span>
-            <ArrowUp className="w-3.5 h-3.5" />
-          </button>
         </div>
       </div>
 
-      {/* Floating Back-To-Top Button */}
       {showBackToTop && (
-        <button
-          type="button"
+        <Button
+          variant="icon"
+          size="lg"
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-40 p-3 rounded-xl bg-dark-800 border border-slate-700 text-slate-200 hover:text-dark-950 hover:bg-cyan-400 hover:border-cyan-400 shadow-xl transition-all duration-200"
+          className="fixed bottom-6 right-6 z-40 shadow-lift"
           aria-label="Scroll to top"
         >
-          <ArrowUp className="w-5 h-5" />
-        </button>
+          <ArrowUp className="h-4 w-4" />
+        </Button>
       )}
     </footer>
   );

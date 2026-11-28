@@ -41,7 +41,13 @@ export const portfolioData = {
       label: "BS INFORMATION SYSTEMS GRADUATE",
       heading: "Hi, I'm Joemarie.",
       subheading: "I build practical digital solutions.",
-      supportingText: "I'm a BS Information Systems graduate with hands-on experience in IT support, web development, database management, and information systems. I enjoy building practical applications that solve real-world problems while continuously learning new technologies.",
+      supportingText: "I'm a BS Information Systems graduate with hands-on experience in IT support, web development, database management, and information systems. I enjoy building practical applications that solve real-world problems while continuously learning new technologies and exploring AI-powered tools to enhance my skills, creativity, and development workflow.",
+      aiTools: [
+        { name: "Antigravity", icon: "/images/ai-tools/antigravity.png" },
+        { name: "Google Gemini", icon: "/images/ai-tools/gemini.jpg" },
+        { name: "Claude", icon: "/images/ai-tools/claude.jpg" },
+        { name: "ChatGPT", icon: "/images/ai-tools/chatgpt.jpg" }
+      ],
       locationText: "Negros Occidental, Philippines",
       focusText: "IT Support • Web Development • Information Systems"
     },
@@ -91,6 +97,8 @@ export const portfolioData = {
         { name: "JavaScript", role: "Core" },
         { name: "HTML", role: "Markup" },
         { name: "CSS", role: "Styling" },
+        { name: "Tailwind CSS", role: "Framework" },
+        { name: "Bootstrap", role: "Framework" },
         { name: "Python", role: "Scripting" }
       ]
     },
@@ -618,10 +626,11 @@ export const portfolioData = {
       imageShowcase: {
         title: "COMELEC Queue Management System (QMS) & Digital Operations",
         src: "/images/projects/comelec-qms.png",
-        caption: "Assisted with workstation deployment, queue operations, digital records, and technical support."
+        caption: "Developed a Queue Management System (QMS) for COMELEC and assisted with workstation deployment, queue operations, digital records, and technical support."
       },
-      description: "During my internship with COMELEC, I provided technical and administrative support while assisting with IT-related operations and digital records.",
+      description: "During my internship with COMELEC, I developed a Queue Management System (QMS) and provided technical and administrative support while assisting with IT-related operations and digital records.",
       responsibilities: [
+        "Developed a Queue Management System (QMS) for COMELEC",
         "Assisted with workstation deployment and setup",
         "Performed basic hardware diagnostics",
         "Installed and configured operating systems",
@@ -633,7 +642,7 @@ export const portfolioData = {
         "Assisted with data encoding and digital records management",
         "Supported the Online Voter Registration System operations"
       ],
-      tags: ["Hardware Diagnostics", "OS Configuration", "Workstation Deployment", "Digital Records", "OVRS Support"]
+      tags: ["Queue Management System (QMS)", "Hardware Diagnostics", "OS Configuration", "Workstation Deployment", "Digital Records", "OVRS Support"]
     },
     {
       id: "chmsu-student-assistant",

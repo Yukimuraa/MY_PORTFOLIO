@@ -1,133 +1,221 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, ExternalLink, X } from 'lucide-react';
+import { Award, ArrowUpRight, ExternalLink, X } from 'lucide-react';
 import { Section } from './ui/Section';
-import { Card } from './ui/Card';
+import { Button } from './ui/Button';
+import { FannedCarousel } from './ui/FannedCarousel';
+
+const CompactCertificateSlide = ({ cert, isCenter, isVisible, onActivate }) => {
+  const handleImageError = (e) => {
+    if (cert.fallback && e.currentTarget.src !== cert.fallback) {
+      e.currentTarget.src = cert.fallback;
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      draggable={false}
+      onClick={onActivate}
+      tabIndex={isVisible ? 0 : -1}
+      aria-label={isCenter ? `Inspect certificate: ${cert.title}` : `Bring ${cert.title} to center`}
+      className={`group block w-full rounded-2xl border bg-surface p-4 text-left transition-colors duration-200 ${
+        isCenter
+          ? 'border-line-strong shadow-lift hover:border-ink/40'
+          : 'border-line shadow-card hover:opacity-85'
+      }`}
+    >
+      {/* Top Pill Badge */}
+      <div className="flex items-center justify-between gap-2">
+        <span className="inline-flex items-center gap-1 rounded-full bg-ink px-2.5 py-0.5 font-mono text-[9.5px] font-semibold uppercase tracking-[0.11em] text-canvas">
+          <span aria-hidden="true">‹</span>
+          <span className="max-w-[180px] truncate sm:max-w-[205px]">
+            {cert.badge || cert.status || 'Verified Credential'}
+          </span>
+          <span aria-hidden="true">›</span>
+        </span>
+        {cert.courseCode && (
+          <span className="rounded-full border border-line bg-elevated px-2 py-0.5 font-mono text-[10px] text-ink-subtle">
+            {cert.courseCode}
+          </span>
+        )}
+      </div>
+
+      {/* Certificate Preview Frame */}
+      <div className="relative mt-3 flex h-36 sm:h-40 w-full items-center justify-center overflow-hidden rounded-xl border border-line bg-elevated p-2">
+        {cert.image ? (
+          <img
+            src={cert.image}
+            alt={`${cert.title} certificate`}
+            draggable={false}
+            loading="lazy"
+            decoding="async"
+            onError={handleImageError}
+            className="max-h-full max-w-full rounded object-contain shadow-card transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+          />
+        ) : (
+          <Award className="h-7 w-7 text-ink-subtle" aria-hidden="true" />
+        )}
+      </div>
+
+      {/* Title & Issuer */}
+      <div className="mt-3">
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="line-clamp-1 text-sm sm:text-base font-semibold tracking-tight text-ink">
+            {cert.title}
+          </h3>
+          <ArrowUpRight
+            className={`mt-0.5 h-4 w-4 shrink-0 transition-transform duration-200 ${
+              isCenter
+                ? 'text-ink-muted group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink'
+                : 'text-ink-subtle'
+            }`}
+            aria-hidden="true"
+          />
+        </div>
+        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ink-muted">
+          {cert.description || cert.issuer}
+        </p>
+      </div>
+
+      {/* Footer Meta */}
+      <div className="mt-3 flex items-center justify-between gap-2 border-t border-line/80 pt-3">
+        <span className="truncate text-xs text-ink-subtle">{cert.issuer}</span>
+        {cert.date && (
+          <span className="shrink-0 font-mono text-[10px] text-ink-subtle">{cert.date}</span>
+        )}
+      </div>
+    </button>
+  );
+};
 
 export const Certificates = ({ certificates, onActionToast }) => {
   const [selectedCert, setSelectedCert] = useState(null);
 
+  useEffect(() => {
+    if (!selectedCert) return undefined;
+    const onKey = (e) => e.key === 'Escape' && setSelectedCert(null);
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [selectedCert]);
+
+  const handleImageError = (cert) => (e) => {
+    if (cert.fallback && e.currentTarget.src !== cert.fallback) {
+      e.currentTarget.src = cert.fallback;
+    }
+  };
+
   return (
     <Section
       id="certificates"
-      tag="Credentials"
+      index="08"
+      tag="certificates"
       title="Certificates & Training"
-      subtitle="Industry and specialized coursework in data analysis, relational databases, web development, and analytics."
-      alt
+      subtitle="Coursework in data analysis, relational databases, web development, and analytics."
+      centerHeader
     >
-      {/* Responsive Grid for 5 Certificates: 3 cols on desktop, 2 on tablet, 1 on mobile */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
-        {certificates.map((cert, idx) => (
-          <motion.div
-            key={cert.id}
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.35, delay: idx * 0.07 }}
-          >
-            <Card
-              className="h-full flex flex-col justify-between p-0 overflow-hidden cursor-pointer group hover:border-cyan-500/50 transition-all duration-200"
-              onClick={() => setSelectedCert(cert)}
-              title="Click to view full certificate and verification"
-            >
-              {/* Certificate Image Preview: Full screenshot visible with object-contain */}
-              <div className="w-full h-48 sm:h-56 bg-dark-950/95 relative flex items-center justify-center p-3 border-b border-slate-800/80 overflow-hidden">
-                {cert.image ? (
-                  <img
-                    src={cert.image}
-                    alt={`${cert.title} certificate`}
-                    loading="lazy"
-                    onError={(e) => {
-                      if (cert.fallback && e.target.src !== cert.fallback) {
-                        e.target.src = cert.fallback;
-                      }
-                    }}
-                    className="max-w-full max-h-full w-auto h-auto object-contain object-center rounded shadow-sm transition-transform duration-300 group-hover:scale-[1.03]"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-slate-500">
-                    <Award className="w-10 h-10 text-cyan-400" />
-                  </div>
-                )}
-              </div>
+      <FannedCarousel
+        items={certificates}
+        getKey={(c) => c.id}
+        getLabel={(c) => c.title}
+        onSelectItem={(c) => setSelectedCert(c)}
+        stageHeightClass="h-[340px] sm:h-[360px]"
+        cardWidthClass="w-[76vw] max-w-[300px] sm:max-w-[340px]"
+        ariaLabel="Certificates and training carousel"
+        renderCard={({ item, isCenter, isVisible, onActivate }) => (
+          <CompactCertificateSlide
+            cert={item}
+            isCenter={isCenter}
+            isVisible={isVisible}
+            onActivate={onActivate}
+          />
+        )}
+      />
 
-              {/* Card Body: ONLY the title of the certificate is visible */}
-              <div className="p-4 sm:p-5 flex items-center justify-center text-center flex-grow">
-                <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-cyan-400 transition-colors leading-snug">
-                  {cert.title}
-                </h3>
-              </div>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Certificate Viewer Modal */}
       <AnimatePresence>
         {selectedCert && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark-950/85 backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+            onClick={() => setSelectedCert(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cert-modal-title"
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-dark-900 border border-slate-700 rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl flex flex-col"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.2 }}
+              className="flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-xl border border-line bg-surface shadow-lift"
+              onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal Header */}
-              <div className="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between">
+              <div className="flex items-start justify-between gap-4 border-b border-line p-5">
                 <div>
-                  <h3 className="text-lg font-bold text-white">{selectedCert.title}</h3>
-                  <p className="text-xs text-slate-400">{selectedCert.issuer || 'Official Certification'}</p>
+                  <h3 id="cert-modal-title" className="text-base font-semibold text-ink">
+                    {selectedCert.title}
+                  </h3>
+                  <p className="mt-0.5 text-sm text-ink-subtle">
+                    {selectedCert.issuer || 'Official Certification'}
+                    {selectedCert.date && ` · ${selectedCert.date}`}
+                  </p>
                 </div>
-                <button
-                  type="button"
+                <Button
+                  variant="icon"
+                  size="sm"
                   onClick={() => setSelectedCert(null)}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-dark-800 transition-colors"
+                  aria-label="Close certificate"
                 >
-                  <X className="w-5 h-5" />
-                </button>
+                  <X className="h-4 w-4" />
+                </Button>
               </div>
 
-              {/* Full Image Display */}
-              <div className="p-4 sm:p-6 bg-dark-950 flex items-center justify-center max-h-[72vh] overflow-auto">
+              <div className="flex min-h-0 flex-1 items-center justify-center overflow-auto bg-elevated p-4 sm:p-6">
                 <img
                   src={selectedCert.image}
                   alt={selectedCert.title}
-                  onError={(e) => {
-                    if (selectedCert.fallback && e.target.src !== selectedCert.fallback) {
-                      e.target.src = selectedCert.fallback;
-                    }
-                  }}
-                  className="max-w-full max-h-[62vh] w-auto h-auto object-contain rounded shadow-md"
+                  onError={handleImageError(selectedCert)}
+                  className="max-h-[62vh] max-w-full rounded object-contain shadow-card"
                 />
               </div>
 
-              {/* Modal Footer with Verification Link */}
-              <div className="p-4 border-t border-slate-800 bg-dark-850 flex items-center justify-between">
-                <span className="text-xs text-slate-300 font-medium">Click to inspect credential authenticity</span>
+              <div className="flex flex-col gap-3 border-t border-line p-4 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm text-ink-muted">{selectedCert.description}</p>
                 {selectedCert.verificationUrl ? (
-                  <button
-                    type="button"
-                    onClick={() => window.open(selectedCert.verificationUrl, '_blank', 'noopener,noreferrer')}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-dark-950 font-bold text-xs shadow-sm transition-colors"
+                  <Button
+                    href={selectedCert.verificationUrl}
+                    variant="primary"
+                    size="sm"
+                    icon={ExternalLink}
+                    iconPosition="right"
+                    className="shrink-0"
                   >
-                    <span>Verify Credential Online</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </button>
+                    Verify Credential
+                  </Button>
                 ) : (
-                  <button
-                    type="button"
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="shrink-0"
                     onClick={() => {
                       setSelectedCert(null);
-                      onActionToast(`Verification documentation for "${selectedCert.title}" available on request.`);
+                      onActionToast(
+                        `Verification documentation for "${selectedCert.title}" available on request.`
+                      );
                     }}
-                    className="text-xs text-cyan-400 hover:underline"
                   >
-                    Documentation Available On Request
-                  </button>
+                    Available on Request
+                  </Button>
                 )}
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </Section>

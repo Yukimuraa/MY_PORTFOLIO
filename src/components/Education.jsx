@@ -1,69 +1,42 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { GraduationCap, BookMarked } from 'lucide-react';
+import { GraduationCap } from 'lucide-react';
 import { Section } from './ui/Section';
 
-export const Education = ({ education }) => {
-  return (
-    <Section
-      id="education"
-      tag="Academic Foundation"
-      title="Education"
-      subtitle="Comprehensive coursework and practical training in information systems, databases, and software engineering."
-    >
-      <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="bg-dark-800/90 border border-slate-800/90 rounded-3xl p-6 sm:p-9 shadow-dark-card relative overflow-hidden"
-        >
-          {/* Subtle cyan border accent on the left */}
-          <div className="absolute top-0 left-0 bottom-0 w-1.5 bg-cyan-500" />
-
-          <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
-            <div>
-              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-cyan-400 mb-1">
-                <GraduationCap className="w-4 h-4" />
-                <span>Undergraduate Degree</span>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white">
-                {education.degree}
-              </h3>
-              <p className="text-sm font-semibold text-slate-300 mt-1">
-                {education.school}
-              </p>
-              <p className="text-xs text-slate-400 mt-0.5">{education.location}</p>
-            </div>
-
-            <span className="text-xs font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-3.5 py-1.5 rounded-full">
-              {education.period}
-            </span>
-          </div>
-
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed mb-6">
-            {education.description}
-          </p>
-
+export const Education = ({ education }) => (
+  <Section
+    id="education"
+    index="07"
+    tag="education"
+    title="Education"
+    subtitle="Coursework and practical training in information systems, databases, and software engineering."
+  >
+    <div className="rounded-xl border border-line bg-surface p-6 sm:p-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex gap-4">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line bg-elevated text-ink-muted">
+            <GraduationCap className="h-5 w-5" aria-hidden="true" />
+          </span>
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-              <BookMarked className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Relevant Study Areas</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {education.relevantAreas.map((area, idx) => (
-                <span
-                  key={idx}
-                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-dark-850 border border-slate-700/80 text-slate-200"
-                >
-                  {area}
-                </span>
-              ))}
-            </div>
+            <h3 className="text-lg font-semibold tracking-tight text-ink">{education.degree}</h3>
+            <p className="mt-1 text-sm text-ink-muted">{education.school}</p>
+            <p className="text-sm text-ink-subtle">{education.location}</p>
           </div>
-        </motion.div>
+        </div>
+        <p className="font-mono text-xs text-ink-subtle sm:pt-1">{education.period}</p>
       </div>
-    </Section>
-  );
-};
+
+      <p className="mt-6 text-sm leading-relaxed text-ink-muted">{education.description}</p>
+
+      <div className="mt-6 border-t border-line pt-6">
+        <p className="eyebrow mb-3">Relevant Study Areas</p>
+        <div className="flex flex-wrap gap-1.5">
+          {education.relevantAreas.map((area) => (
+            <span key={area} className="tag">
+              {area}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </Section>
+);

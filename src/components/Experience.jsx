@@ -1,115 +1,80 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase, CheckCircle2 } from 'lucide-react';
 import { Section } from './ui/Section';
 
-export const Experience = ({ experience }) => {
-  return (
-    <Section
-      id="experience"
-      tag="Career History"
-      title="Experience"
-      subtitle="Practical technical support, workstation staging, and institutional operations experience."
-      alt
-    >
-      <div className="max-w-4xl mx-auto relative">
-        {/* Timeline connecting line */}
-        <div className="absolute top-4 bottom-4 left-4 md:left-6 w-0.5 bg-gradient-to-b from-cyan-500 via-cyan-500/40 to-slate-800 -z-0" />
+export const Experience = ({ experience }) => (
+  <Section
+    id="experience"
+    index="03"
+    tag="experience"
+    title="Experience"
+    subtitle="Practical technical support, workstation staging, and institutional operations experience."
+  >
+    <ol className="space-y-0">
+      {experience.map((item, idx) => (
+        <motion.li
+          key={item.id}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.3 }}
+          className={`grid grid-cols-1 gap-4 py-10 md:grid-cols-[180px_minmax(0,1fr)] md:gap-10 ${
+            idx > 0 ? 'border-t border-line' : 'pt-0'
+          }`}
+        >
+          <div>
+            <p className="font-mono text-xs text-ink-subtle">{item.period}</p>
+          </div>
 
-        <div className="space-y-10 sm:space-y-12">
-          {experience.map((item, idx) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, x: -15 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="relative pl-12 md:pl-16"
-            >
-              {/* Timeline marker icon */}
-              <div className="absolute left-1.5 md:left-3.5 top-1.5 w-6 h-6 rounded-full bg-dark-900 border-2 border-cyan-400 flex items-center justify-center text-cyan-400 shadow-[0_0_12px_rgba(14,165,233,0.4)] z-10">
-                <div className="w-2 h-2 rounded-full bg-cyan-400" />
-              </div>
+          <div>
+            <h3 className="text-lg font-semibold tracking-tight text-ink">{item.position}</h3>
+            <p className="mt-1 text-sm text-ink-muted">
+              {item.company}
+              {item.department && <span className="text-ink-subtle"> — {item.department}</span>}
+            </p>
+            {item.highlight && <p className="mt-3 text-xs font-medium text-ink-subtle">{item.highlight}</p>}
 
-              {/* Experience Card */}
-              <div className="bg-dark-800/90 border border-slate-800/90 hover:border-cyan-500/40 rounded-2xl p-6 sm:p-7 shadow-dark-card transition-colors">
-                <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-white">
-                      {item.position}
-                    </h3>
-                    <div className="text-sm font-semibold text-cyan-400 mt-0.5">
-                      {item.company}
-                      {item.department && ` — ${item.department}`}
-                    </div>
-                  </div>
+            <p className="mt-4 text-sm leading-relaxed text-ink-muted">{item.description}</p>
 
-                  <div className="flex items-center gap-2">
-                    {item.highlight && (
-                      <span className="text-[11px] font-semibold text-cyan-300 bg-cyan-500/10 border border-cyan-500/30 px-2.5 py-1 rounded-full">
-                        {item.highlight}
-                      </span>
-                    )}
-                    <span className="text-xs font-mono text-slate-400 bg-dark-850 px-3 py-1 rounded-full border border-slate-800">
-                      {item.period}
-                    </span>
-                  </div>
+            <ul className="mt-4 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
+              {item.responsibilities.map((resp) => (
+                <li key={resp} className="flex gap-2.5 text-sm leading-relaxed text-ink-muted">
+                  <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-ink-subtle" aria-hidden="true" />
+                  <span>{resp}</span>
+                </li>
+              ))}
+            </ul>
+
+            {item.imageShowcase && (
+              <figure className="mt-6 overflow-hidden rounded-xl border border-line bg-elevated">
+                <div className="aspect-[16/9]">
+                  <img
+                    src={item.imageShowcase.src}
+                    alt={item.imageShowcase.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-contain"
+                  />
                 </div>
+                <figcaption className="border-t border-line bg-surface px-4 py-3 text-xs text-ink-muted">
+                  <span className="font-medium text-ink">{item.imageShowcase.title}</span>
+                  {item.imageShowcase.caption && <span className="block mt-0.5">{item.imageShowcase.caption}</span>}
+                </figcaption>
+              </figure>
+            )}
 
-                <p className="text-sm text-slate-300 leading-relaxed mb-4">
-                  {item.description}
-                </p>
-
-                {/* Responsibilities list */}
-                <div className="space-y-2 mb-5">
-                  {item.responsibilities.map((resp, rIdx) => (
-                    <div key={rIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-                      <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                      <span>{resp}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Real system preview if present (e.g. COMELEC QMS) */}
-                {item.imageShowcase && (
-                  <div className="mt-4 pt-4 border-t border-slate-800">
-                    <div className="rounded-xl overflow-hidden border border-slate-700/80 bg-dark-950 flex flex-col items-center">
-                      <div className="w-full h-56 sm:h-72 bg-dark-950/95 flex items-center justify-center p-3">
-                        <img
-                          src={item.imageShowcase.src}
-                          alt={item.imageShowcase.title}
-                          loading="lazy"
-                          className="max-w-full max-h-full w-auto h-auto object-contain object-center rounded shadow-sm"
-                        />
-                      </div>
-                      <div className="p-3 bg-dark-900/90 text-xs text-slate-400 border-t border-slate-800 flex items-center justify-between">
-                        <span className="font-semibold text-slate-200">
-                          {item.imageShowcase.title}
-                        </span>
-                        <span className="text-cyan-400">COMELEC Operations</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Tags */}
-                {item.tags && (
-                  <div className="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-slate-800/80">
-                    {item.tags.map((tag, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="text-[11px] font-mono px-2.5 py-0.5 rounded bg-dark-850 border border-slate-800 text-slate-400"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
+            {item.tags?.length > 0 && (
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {item.tags.map((tag) => (
+                  <span key={tag} className="tag">
+                    {tag}
+                  </span>
+                ))}
               </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </Section>
-  );
-};
+            )}
+          </div>
+        </motion.li>
+      ))}
+    </ol>
+  </Section>
+);
