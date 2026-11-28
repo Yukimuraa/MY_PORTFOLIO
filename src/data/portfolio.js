@@ -415,6 +415,42 @@ export const portfolioData = {
       }
     },
     {
+      id: "ats-resume-builder",
+      name: "ATS Resume Builder",
+      subtitle: "ATS-Friendly Resume Templates & Live Builder Platform",
+      category: "Web Systems",
+      featured: true,
+      image: "/images/projects/ats-resume-builder.jpg",
+      uploadedFallback: null,
+      badge: "Career & Document Builder",
+      shortDescription: "A web-based resume builder offering 13 categorized, ATS-optimized templates with instant live previews and structured formatting.",
+      technologies: ["React", "Tailwind CSS", "JavaScript", "HTML"],
+      features: [
+        "13 curated ATS-friendly resume templates (ATS Classic, ATS Modern, Professional, and more)",
+        "Category filter tabs (All Templates, ATS-Friendly, Professional & Corporate, IT / Developer, Fresh Graduate, Creative, Academic / CV)",
+        "Interactive template preview and one-click 'Use Template' workflow",
+        "Single-column and executive hierarchy layouts engineered for Applicant Tracking Systems",
+        "Clean print-ready resume typography and structured section formatting"
+      ],
+      details: {
+        overview: "ATS Resume Builder is a web application designed to help job seekers—from fresh graduates to senior engineers—create clean, Applicant Tracking System (ATS)-compliant resumes using structured, professionally formatted templates.",
+        problem: "Many job applicants use heavily stylized templates with complex multi-column tables or graphics that ATS parsers fail to read accurately.",
+        solution: "A dedicated template gallery and resume builder featuring 13 ATS-friendly layouts categorized by career stage and industry, with instant previews and guided editing.",
+        myRole: "Frontend Developer & UI/UX Designer",
+        challenges: "Designing diverse, visually distinct resume templates that maintain strict single-column ATS parseability and crisp print layout.",
+        whatILearned: "Structuring reusable template components in React, print-safe CSS typography, and category-driven gallery filtering.",
+        screenshots: [
+          {
+            title: "ATS Resume Builder — Categorized Template Gallery (ATS Classic, ATS Modern, Professional)",
+            src: "/images/projects/ats-resume-builder.jpg",
+            alt: "ATS Resume Builder Template Gallery Screenshot"
+          }
+        ],
+        githubUrl: null,
+        liveDemoUrl: null
+      }
+    },
+    {
       id: "urnotes",
       name: "UrNotes",
       subtitle: "Personal Productivity Web App",
