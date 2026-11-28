@@ -186,8 +186,8 @@ export const portfolioData = {
       subtitle: "University Business Affairs Office Management Platform",
       category: "Web Systems",
       featured: true,
-      image: "/images/projects/bao.png",
-      uploadedFallback: "file:///C:/Users/ASUS/.gemini/antigravity-ide/brain/071ab5e8-c730-4bd8-bfea-d312806f5209/.user_uploaded/media_1790481394480.png",
+      image: "/images/projects/bao-home.jpg",
+      uploadedFallback: null,
       badge: "Academic Capstone Project",
       shortDescription: "A web-based information system designed to manage gym, bus, and item-related operations through a centralized platform.",
       technologies: ["PHP", "MySQL", "HTML", "CSS", "JavaScript"],
@@ -208,6 +208,11 @@ export const portfolioData = {
         challenges: "Ensuring secure email OTP authentication and managing multi-module business logic with relational integrity across users, vehicles, and facilities.",
         whatILearned: "Deepened practical skills in relational database schema design, PHP session and authentication management, and building intuitive admin dashboards.",
         screenshots: [
+          {
+            title: "CHMSU Business Affairs Office Digital Services Portal",
+            src: "/images/projects/bao-home.jpg",
+            alt: "CHMSU BAO Digital Services Portal Landing Page"
+          },
           {
             title: "CHMSU Talisay Business Affairs Office Registration & Account Creation Interface",
             src: "/images/projects/bao.png",
@@ -397,7 +402,7 @@ export const portfolioData = {
       subtitle: "Location-Based Health Analytics & Geo-Visualization",
       category: "Web Systems",
       featured: true,
-      image: "/images/projects/dengue.svg",
+      image: "/images/projects/dengue-login.jpg",
       uploadedFallback: null,
       badge: "Geospatial Health System",
       shortDescription: "A web-based monitoring system designed to help organize and visualize dengue-related information using location-based data.",
@@ -417,7 +422,23 @@ export const portfolioData = {
         myRole: "System Developer & GIS Integrator",
         challenges: "Accurately parsing GeoJSON polygon coordinates for local administrative boundaries while keeping interactive map rendering responsive.",
         whatILearned: "Hands-on experience integrating client-side mapping libraries (Leaflet) with relational spatial data and GeoJSON datasets.",
-        screenshots: [],
+        screenshots: [
+          {
+            title: "Barangay Health Analytics System — Login & Live Case Overview",
+            src: "/images/projects/dengue-login.jpg",
+            alt: "Dengue Monitoring System Login and Live Overview"
+          },
+          {
+            title: "Dengue Hotspot Map — Barangay Geo-Visualization & Risk Levels",
+            src: "/images/projects/dengue-map.jpg",
+            alt: "Dengue Hotspot Map Screenshot"
+          },
+          {
+            title: "Monthly Dengue Cases & Barangay Analytics Dashboard",
+            src: "/images/projects/dengue-analytics.png",
+            alt: "Dengue Monthly Cases and Barangay Analytics Screenshot"
+          }
+        ],
         githubUrl: null,
         liveDemoUrl: null
       }
