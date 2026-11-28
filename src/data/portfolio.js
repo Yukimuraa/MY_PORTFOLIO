@@ -472,6 +472,52 @@ export const portfolioData = {
         githubUrl: null,
         liveDemoUrl: null
       }
+    },
+    {
+      id: "tempus-ojt-tracker",
+      name: "Tempus - OJT Hours Tracker",
+      subtitle: "Student Internship Time Logging & DTTR Progress PWA",
+      category: "Web Systems",
+      featured: true,
+      image: "/images/projects/tempus-home.png",
+      uploadedFallback: null,
+      badge: "Installable Productivity PWA",
+      shortDescription: "A modern web application for student interns to log daily OJT hours, track cumulative progress, and export official DTTR reports.",
+      technologies: ["React", "JavaScript", "Tailwind CSS", "PWA"],
+      features: [
+        "Required, completed, and remaining OJT hours tracking with completion rate metrics",
+        "Daily AM/PM session time logging with activity descriptions and approval status",
+        "Cumulative OJT requirement progress bar and milestone indicators",
+        "Official Daily Time & Tasks Record (DTTR) PDF export in Long Bond, A4, and Letter formats",
+        "Installable Progressive Web App (PWA) with mobile-first responsive views and dark mode"
+      ],
+      details: {
+        overview: "Tempus is an installable Progressive Web App (PWA) built for student interns to simplify tracking On-the-Job Training (OJT) hours, documenting daily tasks, monitoring progress toward required hours, and generating official DTTR reports.",
+        problem: "Student interns often rely on scattered spreadsheets or paper logbooks to track AM/PM sessions, making it error-prone to compute remaining hours and format official DTTR submissions.",
+        solution: "A clean, installable web platform that centralizes session time logs, computes real-time completion percentages, and exports formatted DTTR documents ready for submission.",
+        myRole: "Full Stack Developer & UI/UX Designer",
+        challenges: "Accurately computing rendered hours across split AM/PM sessions and designing printable DTTR layouts that fit multiple paper sizes (Long Bond, A4, Letter).",
+        whatILearned: "Building installable PWA workflows, designing responsive student dashboards for both desktop and mobile, and structuring printable report exports.",
+        screenshots: [
+          {
+            title: "Tempus Landing Page & Live OJT Progress Preview",
+            src: "/images/projects/tempus-home.png",
+            alt: "Tempus OJT Hours Tracker Landing Page Screenshot"
+          },
+          {
+            title: "Tempus Dashboard — Required, Completed & Recent Activity Logs",
+            src: "/images/projects/tempus-dashboard.png",
+            alt: "Tempus Student Dashboard Screenshot"
+          },
+          {
+            title: "Tempus Student Portal Sign-In & Mobile PWA Views",
+            src: "/images/projects/tempus-login.jpg",
+            alt: "Tempus Student Portal Login and Mobile Views Screenshot"
+          }
+        ],
+        githubUrl: null,
+        liveDemoUrl: null
+      }
     }
   ],
 
